@@ -1,9 +1,13 @@
+<html>
+    <h1>
+        Data Keeper
+    </h1>
+    
+    <img src="images/logo.png"></img>
+    
+</html>
 <?php
 
 
-phpinfo();
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 ?>
