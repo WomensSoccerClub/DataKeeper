@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+The following is the configuration for how the DataKeeper tool will associate the data within the databases
+-->
+<KeyObjects>
+    <KeyObject id="0" name="Member">
+        <database>"womensso_wsc"</database>
+        
+        <table name="Member">T_MEMBER</table>
+        <table name="Health Insurance">T_HEALTH_INSURANCE</table>
+        <table name="Volunteer Opportunity">T_VOLUNTEER_OPPORTUNITY</table>
+        <table name="Address" >T_ADDRESS</table>
+        <table name="Occupation">T_OCCUPATION</table>
+        <table name="Contact">T_CONTACT</table>
+        <table name="Emergency Contact">T_EMERGENGY_CONTACT</table>
+        <table name="Medical Condition">T_MEDICAL_CONDITION</table>
+        <table name="Registration Request">T_REGISTRATION_REQUEST</table>
+        <table name="Consent Agreement">T_CONSENT_AGREEMENT</table>
+        
+        <relatedKeyObjects>
+            <KeyObject>Player</KeyObject>
+            <KeyObject>Administrator</KeyObject>
+        </relatedKeyObjects>
+        
+       <!-- This is the column that all of the tables within the specified relationships identify with  -->
+        <RelationshipColumn>MEMBER_IDENTIFIER</RelationshipColumn>
+    </KeyObject>
+    <KeyObject id="1" name="Player">
+        <database>"womensso_sessionmanagement"</database>
+        
+        <table name="Player Details">T_PLAYERS</table>
+        
+        <relatedKeyObjects>
+            <KeyObject>Member</KeyObject>
+            <KeyObject>RSVP</KeyObject>
+            <KeyObject>GI</KeyObject>
+            <KeyObject>Fee</KeyObject>
+            <KeyObject>Team</KeyObject>
+        </relatedKeyObjects>
+        
+       <!-- This is the column that all of the tables within the specified relationships identify with  -->
+        <RelationshipColumn>MEMBER_IDENTIFIER</RelationshipColumn>
+    </KeyObject>
+    <KeyObject id="2" name="Administrator">
+        <database>"womensso_sessionmanagement"</database>
+        
+        <table name="Administrator Details">T_ADMINISTRATORS</table>
+        
+        <relatedKeyObjects>
+            <KeyObject>Member</KeyObject>
+        </relatedKeyObjects>
+        
+       <!-- This is the column that all of the tables within the specified relationships identify with  -->
+        <RelationshipColumn>MEMBER_IDENTIFIER</RelationshipColumn>
+    </KeyObject>
+    <KeyObject id="3" name="RSVP">
+        <database>"womensso_sessionmanagement"</database>
+        
+        <table name="RSVP Details">T_RSVP</table>
+        
+        <relatedKeyObjects>
+            <KeyObject>Player</KeyObject>
+            <KeyObject>Game</KeyObject>
+        </relatedKeyObjects>
+        
+       <!-- This is the column that all of the tables within the specified relationships identify with  -->
+        <RelationshipColumn>MEMBER_IDENTIFIER</RelationshipColumn>
+    </KeyObject>
+    <KeyObject id="4" name="GI">
+        <database>"womensso_sessionmanagement"</database>
+        
+        <table name="GI Details">T_GI</table>
+        
+        <relatedKeyObjects>
+            <KeyObject>Player</KeyObject>
+        </relatedKeyObjects>
+        
+       <!-- This is the column that all of the tables within the specified relationships identify with  -->
+        <RelationshipColumn>MEMBER_IDENTIFIER</RelationshipColumn>
+    </KeyObject>
+    <KeyObject id="5" name="Fee">
+        <database>"womensso_money"</database>
+        
+        <table name="Fee Details">TI_FEES</table>
+        
+        <relatedKeyObjects>
+            <KeyObject>Player</KeyObject>
+        </relatedKeyObjects>
+        
+       <!-- This is the column that all of the tables within the specified relationships identify with  -->
+        <RelationshipColumn>MEMBER_IDENTIFIER</RelationshipColumn>
+    </KeyObject>
+    <KeyObject id="6" name="Team">
+        <database>"womensso_sessionmanagement"</database>
+        
+        <table name="Team Details">T_TEAMS</table>
+        
+        <relatedKeyObjects>
+            <KeyObject>Player</KeyObject>
+            <KeyObject>Division</KeyObject>
+        </relatedKeyObjects>
+        
+       <!-- This is the column that all of the tables within the specified relationships identify with  -->
+        <RelationshipColumn>TEAM_IDENTIFIER</RelationshipColumn>
+    </KeyObject>
+    <KeyObject id="7" name="Divison">
+        <database>"womensso_sessionmanagement"</database>
+        
+        <table name="Division Details">T_DIVISIONS</table>
+        
+        <relatedKeyObjects>
+            <KeyObject>Team</KeyObject>
+            <KeyObject>League</KeyObject>
+        </relatedKeyObjects>
+        
+       <!-- This is the column that all of the tables within the specified relationships identify with  -->
+        <RelationshipColumn>DIVISION_IDENTIFIER</RelationshipColumn>
+    </KeyObject>
+    <KeyObject id="8" name="League">
+        <database>"womensso_sessionmanagement"</database>
+        
+        <table name="League Details">T_LEAGUES</table>
+        
+        <relatedKeyObjects>
+            <KeyObject>Division</KeyObject>
+            <KeyObject>Session</KeyObject>
+        </relatedKeyObjects>
+        
+       <!-- This is the column that all of the tables within the specified relationships identify with  -->
+        <RelationshipColumn>DIVISION_IDENTIFIER</RelationshipColumn>
+    </KeyObject>
+    <KeyObject id="9" name="Session">
+        <database>"womensso_sessionmanagement"</database>
+        
+        <table name="Session Details">T_SESSIONS</table>
+        
+        <relatedKeyObjects>
+            <KeyObject>League</KeyObject>
+        </relatedKeyObjects>
+        
+       <!-- This is the column that all of the tables within the specified relationships identify with  -->
+        <RelationshipColumn>DIVISION_IDENTIFIER</RelationshipColumn>
+    </KeyObject>
+</KeyObjects>

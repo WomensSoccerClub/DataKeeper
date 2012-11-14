@@ -1,0 +1,78 @@
+#hor-minimalist-a
+{
+	font-family: inherit;
+	font-size: 12px;
+	background: #fff;
+	margin: 45px;
+	width: 480px;
+	border-collapse: collapse;
+	text-align: left;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        border-bottom: 1px solid black;
+        padding: 2px 2px 2px 2px;
+}
+#hor-minimalist-a th
+{
+	font-size: 14px;
+	font-weight: normal;
+	color: black;
+	text-align: center;
+	border-bottom: 2px solid black;
+        border-top: 2px solid black;
+        padding: 2px 2px 2px 2px;
+}
+#hor-minimalist-a td
+{
+	color: black;
+	padding: 9px 8px 0px 8px;
+        width: auto;
+}
+#hor-minimalist-a tbody tr:hover
+{
+        background: activecaption;
+}
+
+#hor-minimalist-a .title
+{
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+#hor-minimalist-a tr:not(.title)
+{
+    cursor: pointer;
+}
+
+.selector{
+    width: 150px;
+    border: black solid 1px;
+    float: left;
+    margin-right: 5px;
+    border-radius: 2px;
+}
+
+.selector th
+{
+        font-size: 14px;
+	font-weight: normal;
+	color: black;
+	text-align: center;
+	border-bottom: 2px solid black;
+        border-top: 2px solid black;
+        
+}
+
+.selector tr
+{
+    cursor: pointer;
+}
+.selector tbody tr:hover
+{
+    background: activecaption;
+}
+
+.selector .selected
+{
+    background: activecaption;
+}

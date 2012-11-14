@@ -1,0 +1,118 @@
+/* 
+    Document   : styles.css
+    Created on : Nov 3, 2012, 4:19:26 PM
+    Author     : Ian
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+body{
+    background: #F0F0F0;
+   
+}
+
+h1{
+    font-family: "courier";
+    font-weight: bolder;
+    margin-top: 0;
+    font-size: 30px;
+}
+h3{
+    font-family: "courier";
+    font-weight: bold;
+    margin-bottom: 0px;
+    font-size: 15px;
+}
+
+#container{
+    width: 90%;
+    border: black;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    background: white;
+}
+
+#filters{
+    width: 75%;
+    border: black;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    background: white;
+}
+
+#choiceDiv{
+    margin: 10px auto;
+    display: table;
+}
+.searchChoice{
+    font-family: Verdana;
+    height: 45px;
+    width: 100px;
+    border: grey;
+    border-style: solid;
+    border-radius: 15px;
+    border-width: 2px;
+    background: white;
+    margin-top: 7px;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 10px 10px 10px 10px;
+    margin-bottom: 20px;
+    vertical-align: middle;
+
+}
+.searchChoice:hover{
+    background: activecaption;
+}
+
+#searchChoiceLeft{
+    float:left;
+    
+}
+#searchChoiceRight{
+    float:left;
+ 
+}
+#query{
+    width: 90%;
+}
+
+a#searchButton {
+    background: #09C;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 10px;
+    height: 15px;
+    cursor: pointer;
+    border: solid 1px #666;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+a#searchButton:hover {
+    background: #069;
+    color: #fff;
+}
+
+#searchHistory {
+    display: none; 
+    width: fit-content;
+    clear: both;
+    
+}
+
+#customSearch{
+    display: none; 
+    width: fit-content;
+    clear: both;
+    margin-left: 25%;
+}
+
+
