@@ -6,16 +6,88 @@ The following is the configuration for how the DataKeeper tool will associate th
     <KeyObject id="0" name="Member">
         <database>"womensso_wsc"</database>
         
-        <table name="Member">T_MEMBER</table>
-        <table name="Health Insurance">T_HEALTH_INSURANCE</table>
-        <table name="Volunteer Opportunity">T_VOLUNTEER_OPPORTUNITY</table>
-        <table name="Address" >T_ADDRESS</table>
-        <table name="Occupation">T_OCCUPATION</table>
-        <table name="Contact">T_CONTACT</table>
-        <table name="Emergency Contact">T_EMERGENGY_CONTACT</table>
-        <table name="Medical Condition">T_MEDICAL_CONDITION</table>
-        <table name="Registration Request">T_REGISTRATION_REQUEST</table>
-        <table name="Consent Agreement">T_CONSENT_AGREEMENT</table>
+        <table name="Member">T_MEMBER
+            <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column>
+            <column name="Username" datatype="varchar">USERNAME</column>
+            <column name="Last Name" datatype="varchar">LAST_NAME</column>
+            <column name="Middle Initial" datatype="char">MIDDLE_INITIAL_TEXT</column>
+            <column name="First Name" datatype="varchar">FIRST_NAME</column>
+            <column name="Birthdate" datatype="date">BIRTH_DATE</column>
+            <column name="Most Recent Level" datatype="char" class="lookup" lookupTable="T_LEVEL" >MOST_RECENT_LEVEL_CODE_CHAR</column>
+            <column name="Total Years Experience" datatype="char">TOTAL_EXPERIENCE_YEARS_CATEGORY_CODE</column>      
+            <column name="Last Years Played" datatype="char">LAST_PLAYED_YEARS_CATEGORY_CODE</column>
+            <column name="Number of Children" datatype="tinyint">NUMBER_OF_CHILDREN_QUANTITY</column>
+            <column name="Photograph" datatype="varchar">PHOTOGRAPH_DIRECTORY_TEXT</column>
+            <column name="Date Enrolled" datatype="datetime">MEMBER_ENROLLMENT_DATETIME</column>
+            <column name="Date Last Updated" datatype="datetime">MEMBER_LAST_UPDATE_DATETIME</column>
+            <column name="Health Insurance Indicator" datatype="char">HEALTH_INSURANCE_INDICATOR</column>
+        </table>   
+        <table name="Health Insurance">T_HEALTH_INSURANCE
+           <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
+           <!-- <column name="Order Level Code" datatype="char">ORDER_LEVEL_CODE</column> -->
+            <column name="Company Name" datatype="varchar">COMPANY_NAME</column>
+            <column name="Holder Name" datatype="varchar">HOLDER_NAME</column>
+            <column name="Policy ID" datatype="varchar">POLICY_IDENTIFIER</column>
+            <column name="Group ID" datatype="varchar">HOLDER_NAME</column>
+        </table>        
+        <table name="Volunteer Opportunity">T_VOLUNTEER_OPPORTUNITY
+            <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
+            <column name="Opportunities" datatype="varchar" class="lookup" lookupTable="T_VOLUNTEER_OPPORTUNITY_CODE">VOLUNTEER_OPPORTUNITY_CODES</column>
+        </table>
+        <table name="Address" >T_ADDRESS
+            <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
+            <!-- <column name="Order Level Code" datatype="char">ORDER_LEVEL_CODE</column> -->
+            <column name="Street Address Line 1" datatype="varchar">STREET_ADDRESS_LINE1_TEXT</column>
+            <column name="Street Address Line 2" datatype="varchar">STREET_ADDRESS_LINE2_TEXT</column>
+            <column name="City" datatype="varchar">CITY_TEXT</column>
+            <column name="State" datatype="varchar" class="lookup" lookupTable="T_STATE">T_STATE_ABBREVIATION_CODE</column>
+            <column name="Zip Code" datatype="char">FIVE_DIGIT_POSTAL_CODE</column>
+        </table>
+        <table name="Occupation">T_OCCUPATION
+            <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
+            <!-- <column name="Order Level Code" datatype="char">ORDER_LEVEL_CODE</column> -->
+            <column name="Occupation" datatype="varchar">OCCUPATION_TITLE_NAME</column>
+            <column name="Employer" datatype="varchar">EMPLOYER_NAME</column>
+        </table>
+        <table name="Contact">T_CONTACT
+            <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
+            <column name="Email" datatype="varchar">EMAIL</column>
+            <column name="Primary Phone Type" datatype="char" class="lookup" lookupTable="T_CONTACT_TYPE">PRIMARY_PHONE_TYPE</column>
+            <column name="Primary Phone" datatype="varchar">PRIMARY_PHONE</column>
+            <column name="Secondary Phone Type" datatype="char" class="lookup" lookupTable="T_CONTACT_TYPE">SECONDARY_PHONE_TYPE</column>
+            <column name="Secondary Phone" datatype="varchar">SECONDARY_PHONE</column>
+            <column name="Tertiary Phone Type" datatype="char" class="lookup" lookupTable="T_CONTACT_TYPE">TERTIARY_PHONE_TYPE</column>
+            <column name="Tertiary Phone" datatype="varchar">TERTIARY_PHONE</column>
+        </table>
+        <table name="Emergency Contact">T_EMERGENGY_CONTACT
+            <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
+            <column name="Primary Name" datatype="varchar">PRIMARY_NAME</column>
+            <column name="Primary Phone" datatype="varchar">PRIMARY_PHONE</column>
+            <column name="Secondary Name" datatype="varchar">SECONDARY_NAME</column>
+            <column name="Secondary Phone" datatype="varchar">SECONDARY_PHONE</column>
+        </table>
+        <table name="Medical Condition">T_MEDICAL_CONDITION
+            <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
+            <column name="Allergies" datatype="varchar">ALLERGIES</column>
+            <column name="Medical Condition Comment" datatype="varchar">MEDICAL_CONDITION_COMMENT_TEXT</column>
+        </table>
+        <table name="Registration Request">T_REGISTRATION_REQUEST
+            <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
+            <column name="Registration Request ID" datatype="tinyint">REGISTRATION_REQUEST_IDENTIFIER</column>
+            <column name="WSC League" datatype="char" class="lookup" lookupTable="T_WSC_LEAGUE">WSC_LEAGUE_CODE</column>
+            <column name="Position" datatype="char" class="lookup" lookupTable="T_PLAYER_POSITION">POSITION_CODE</column>
+            <column name="WSC Team" datatype="varchar">WSC_TEAM_NAME</column>
+            <column name="Payment Processed" datatype="tinyint">REGISTRATION_PAYMENT_PROCESSED</column>
+            <column name="High School" datatype="varchar">HIGHSCHOOL_ATTENDED</column>
+            <column name="College" datatype="varchar">COLLEGE_ATTENDED</column>
+        </table>
+        <table name="Consent Agreement">T_CONSENT_AGREEMENT
+            <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
+            <column name="Consent Agreement" datatype="varchar" class="lookup" lookupTable="T_CONSENT_AGREEMENT_OBJECT">CONSENT_OBJECT_TYPE_CODE</column>
+            <column name="Consent Approved" datatype="char">CONSENT_APPROVAL_INDICATOR</column>
+            <column name="Date" datatype="date">CONSENT_DATE</column>
+        
+        </table>
         
         <relatedKeyObjects>
             <KeyObject>Player</KeyObject>
