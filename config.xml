@@ -5,8 +5,7 @@ The following is the configuration for how the DataKeeper tool will associate th
 <KeyObjects>
     <KeyObject id="0" name="Member">
         <database>"womensso_wsc"</database>
-        
-        <table name="Member">T_MEMBER
+        <table name="Member" value="T_MEMBER">
             <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column>
             <column name="Username" datatype="varchar">USERNAME</column>
             <column name="Last Name" datatype="varchar">LAST_NAME</column>
@@ -22,7 +21,7 @@ The following is the configuration for how the DataKeeper tool will associate th
             <column name="Date Last Updated" datatype="datetime">MEMBER_LAST_UPDATE_DATETIME</column>
             <column name="Health Insurance Indicator" datatype="char">HEALTH_INSURANCE_INDICATOR</column>
         </table>   
-        <table name="Health Insurance">T_HEALTH_INSURANCE
+        <table name="Health Insurance" value="T_HEALTH_INSURANCE">
            <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
            <!-- <column name="Order Level Code" datatype="char">ORDER_LEVEL_CODE</column> -->
             <column name="Company Name" datatype="varchar">COMPANY_NAME</column>
@@ -30,11 +29,11 @@ The following is the configuration for how the DataKeeper tool will associate th
             <column name="Policy ID" datatype="varchar">POLICY_IDENTIFIER</column>
             <column name="Group ID" datatype="varchar">HOLDER_NAME</column>
         </table>        
-        <table name="Volunteer Opportunity">T_VOLUNTEER_OPPORTUNITY
+        <table name="Volunteer Opportunity" value="T_VOLUNTEER_OPPORTUNITY">
             <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
             <column name="Opportunities" datatype="varchar" class="lookup" lookupTable="T_VOLUNTEER_OPPORTUNITY_CODE">VOLUNTEER_OPPORTUNITY_CODES</column>
         </table>
-        <table name="Address" >T_ADDRESS
+        <table name="Address" value="T_ADDRESS">
             <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
             <!-- <column name="Order Level Code" datatype="char">ORDER_LEVEL_CODE</column> -->
             <column name="Street Address Line 1" datatype="varchar">STREET_ADDRESS_LINE1_TEXT</column>
@@ -43,13 +42,13 @@ The following is the configuration for how the DataKeeper tool will associate th
             <column name="State" datatype="varchar" class="lookup" lookupTable="T_STATE">T_STATE_ABBREVIATION_CODE</column>
             <column name="Zip Code" datatype="char">FIVE_DIGIT_POSTAL_CODE</column>
         </table>
-        <table name="Occupation">T_OCCUPATION
+        <table name="Occupation" value="T_OCCUPATION">
             <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
             <!-- <column name="Order Level Code" datatype="char">ORDER_LEVEL_CODE</column> -->
             <column name="Occupation" datatype="varchar">OCCUPATION_TITLE_NAME</column>
             <column name="Employer" datatype="varchar">EMPLOYER_NAME</column>
         </table>
-        <table name="Contact">T_CONTACT
+        <table name="Contact" value="T_CONTACT">
             <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
             <column name="Email" datatype="varchar">EMAIL</column>
             <column name="Primary Phone Type" datatype="char" class="lookup" lookupTable="T_CONTACT_TYPE">PRIMARY_PHONE_TYPE</column>
@@ -59,19 +58,19 @@ The following is the configuration for how the DataKeeper tool will associate th
             <column name="Tertiary Phone Type" datatype="char" class="lookup" lookupTable="T_CONTACT_TYPE">TERTIARY_PHONE_TYPE</column>
             <column name="Tertiary Phone" datatype="varchar">TERTIARY_PHONE</column>
         </table>
-        <table name="Emergency Contact">T_EMERGENGY_CONTACT
+        <table name="Emergency Contact" value="T_EMERGENGY_CONTACT">
             <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
             <column name="Primary Name" datatype="varchar">PRIMARY_NAME</column>
             <column name="Primary Phone" datatype="varchar">PRIMARY_PHONE</column>
             <column name="Secondary Name" datatype="varchar">SECONDARY_NAME</column>
             <column name="Secondary Phone" datatype="varchar">SECONDARY_PHONE</column>
         </table>
-        <table name="Medical Condition">T_MEDICAL_CONDITION
+        <table name="Medical Condition" value="T_MEDICAL_CONDITION">
             <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
             <column name="Allergies" datatype="varchar">ALLERGIES</column>
             <column name="Medical Condition Comment" datatype="varchar">MEDICAL_CONDITION_COMMENT_TEXT</column>
         </table>
-        <table name="Registration Request">T_REGISTRATION_REQUEST
+        <table name="Registration Request" value="T_REGISTRATION_REQUEST">
             <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
             <column name="Registration Request ID" datatype="tinyint">REGISTRATION_REQUEST_IDENTIFIER</column>
             <column name="WSC League" datatype="char" class="lookup" lookupTable="T_WSC_LEAGUE">WSC_LEAGUE_CODE</column>
@@ -81,12 +80,11 @@ The following is the configuration for how the DataKeeper tool will associate th
             <column name="High School" datatype="varchar">HIGHSCHOOL_ATTENDED</column>
             <column name="College" datatype="varchar">COLLEGE_ATTENDED</column>
         </table>
-        <table name="Consent Agreement">T_CONSENT_AGREEMENT
+        <table name="Consent Agreement" value="T_CONSENT_AGREEMENT" >
             <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
             <column name="Consent Agreement" datatype="varchar" class="lookup" lookupTable="T_CONSENT_AGREEMENT_OBJECT">CONSENT_OBJECT_TYPE_CODE</column>
             <column name="Consent Approved" datatype="char">CONSENT_APPROVAL_INDICATOR</column>
             <column name="Date" datatype="date">CONSENT_DATE</column>
-        
         </table>
         
         <relatedKeyObjects>
@@ -100,7 +98,13 @@ The following is the configuration for how the DataKeeper tool will associate th
     <KeyObject id="1" name="Player">
         <database>"womensso_sessionmanagement"</database>
         
-        <table name="Player Details">T_PLAYERS</table>
+        <table name="Player Details" value="T_PLAYERS">
+           <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column>
+           <column name="Team ID" datatype="int">TEAM_IDENTIFIER</column>
+           <column name="Player Rank Code" datatype="varchar">PLAYER_RANK_CODE</column>
+           <column name="Player Status" datatype="varchar">PLAYER_STATUS</column>
+           <column name="Jersey Number" datatype="int">JERSEY_NUMBER</column>
+        </table>
         
         <relatedKeyObjects>
             <KeyObject>Member</KeyObject>
@@ -116,7 +120,11 @@ The following is the configuration for how the DataKeeper tool will associate th
     <KeyObject id="2" name="Administrator">
         <database>"womensso_sessionmanagement"</database>
         
-        <table name="Administrator Details">T_ADMINISTRATORS</table>
+        <table name="Administrator Details" value="T_ADMINISTRATORS">
+           <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column>
+           <column name="Administrator ID" datatype="int">ADMINISTRATOR_IDENTIFIER</column>
+           <column name="Administrator Page ID" datatype="int">ADMINISTRATOR_PAGE_IDENTIFIER</column>
+        </table>
         
         <relatedKeyObjects>
             <KeyObject>Member</KeyObject>
@@ -128,7 +136,15 @@ The following is the configuration for how the DataKeeper tool will associate th
     <KeyObject id="3" name="RSVP">
         <database>"womensso_sessionmanagement"</database>
         
-        <table name="RSVP Details">T_RSVP</table>
+        <table name="RSVP Details" value="T_RSVP">
+           <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
+           <column name="RSVP ID" datatype="int">RSVP_IDENTIFIER</column>
+           <column name="Game ID" datatype="int">GAME_IDENTIFIER</column>
+           <column name="Is attending?" datatype="varchar">ATTENDENCE_STATUS</column>
+           <column name="Num Emils Sent" datatype="int">EMAILS_SENT</column> 
+           <column name="Last Day Sent" datatype="date">DAY_SENT</column>
+           <column name="Memo" datatype="int">MEMO</column>
+        </table>
         
         <relatedKeyObjects>
             <KeyObject>Player</KeyObject>
@@ -141,7 +157,12 @@ The following is the configuration for how the DataKeeper tool will associate th
     <KeyObject id="4" name="GI">
         <database>"womensso_sessionmanagement"</database>
         
-        <table name="GI Details">T_GI</table>
+        <table name="GI Details" value="T_GI">
+           <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column>
+           <column name="GI ID" datatype="int">GI_IDENTIFIER</column>
+           <column name="GI Type" datatype="int" class="lookup" lookupTable="T_GI_TYPES">GI_TYPE_IDENTIFIER</column>
+           <column name="Year" datatype="varchar" >Year</column> 
+        </table>
         
         <relatedKeyObjects>
             <KeyObject>Player</KeyObject>
@@ -153,7 +174,18 @@ The following is the configuration for how the DataKeeper tool will associate th
     <KeyObject id="5" name="Fee">
         <database>"womensso_money"</database>
         
-        <table name="Fee Details">TI_FEES</table>
+        <table name="Fee Details" value="TI_FEES">
+           <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column>
+           <column name="Fee ID" datatype="int">MEMBER_FEE_IDENTIFIER</column>
+           <column name="Team ID" datatype="int">TEAM_IDENTIFIER</column>
+           <column name="Fee Discriptor" datatype="varchar" >FEE_DISCRIPTOR</column> 
+           <column name="Amount" datatype="float">Amount</column>
+           <column name="Is Paid?" datatype="int">IS_PAID</column>
+           <column name="Date Assigned" datatype="date">DATE_ASSIGNED</column>
+           <column name="Date Paid" datatype="date">DATE_PAID</column>
+           <column name="Paypal Transaction ID" datatype="varchar">TRANSACTION_IDENTIFIER</column>
+           <column name="Memo" datatype="varchar" >MEMO</column>  
+        </table>
         
         <relatedKeyObjects>
             <KeyObject>Player</KeyObject>
@@ -165,7 +197,16 @@ The following is the configuration for how the DataKeeper tool will associate th
     <KeyObject id="6" name="Team">
         <database>"womensso_sessionmanagement"</database>
         
-        <table name="Team Details">T_TEAMS</table>
+        <table name="Team Details" value="T_TEAMS">
+           <column name="Team ID" datatype="int">TEAM_IDENTIFIER</column>
+           <column name="Team Name" datatype="varchar">TEAM_NAME</column>
+           <column name="Division ID" datatype="int">DIVISION_IDENTIFIER</column>
+           <column name="Team Logo" datatype="varchar">TEAM_LOGO</column>
+           <column name="Active RSVP?" datatype="int">RSVP_ACTIVE</column>
+           <column name="Substitute RSVP?" datatype="int">RSVP_SUBSTITUTE</column>
+           <column name="Inactive RSVP?" datatype="int">RSVP_INACTIVE</column>
+            
+        </table>
         
         <relatedKeyObjects>
             <KeyObject>Player</KeyObject>
@@ -178,7 +219,11 @@ The following is the configuration for how the DataKeeper tool will associate th
     <KeyObject id="7" name="Divison">
         <database>"womensso_sessionmanagement"</database>
         
-        <table name="Division Details">T_DIVISIONS</table>
+        <table name="Division Details" value="T_DIVISIONS">
+           <column name="Division ID" datatype="int">DIVISION_IDENTIFIER</column>
+           <column name="Division Name" datatype="varchar">DIVISIION_NAME</column>
+           <column name="League ID" datatype="int">LEAGUE_IDENTIFIER</column> 
+        </table>
         
         <relatedKeyObjects>
             <KeyObject>Team</KeyObject>
@@ -191,7 +236,16 @@ The following is the configuration for how the DataKeeper tool will associate th
     <KeyObject id="8" name="League">
         <database>"womensso_sessionmanagement"</database>
         
-        <table name="League Details">T_LEAGUES</table>
+        <table name="League Details" value="T_LEAGUES">
+           <column name="League ID" datatype="int">LEAGUE_IDENTIFIER</column>
+           <column name="League Name" datatype="varchar">LEAGUE_NAME</column>
+           <column name="Session ID" datatype="int">SESSION_IDENTIFIER</column> 
+           <column name="Start Date" datatype="date">START_DATE</column> 
+           <column name="End Date" datatype="date">END_DATE</column> 
+           <column name="Fee Start Date" datatype="date">FEE_START_DATE</column> 
+           <column name="Fee End Date" datatype="date">FEE_END_DATE</column> 
+           <column name="Fee Amount" datatype="int">FEE_AMOUNT</column> 
+        </table>
         
         <relatedKeyObjects>
             <KeyObject>Division</KeyObject>
@@ -204,7 +258,11 @@ The following is the configuration for how the DataKeeper tool will associate th
     <KeyObject id="9" name="Session">
         <database>"womensso_sessionmanagement"</database>
         
-        <table name="Session Details">T_SESSIONS</table>
+        <table name="Session Details" value="T_SESSIONS">
+            <column name="Session ID" datatype="int">SESSION_IDENTIFIER</column>
+            <column name="Session Name" datatype="varchar">SESSION_NAME</column>
+            <column name="Is New?" datatype="int">NEW</column>
+        </table>
         
         <relatedKeyObjects>
             <KeyObject>League</KeyObject>

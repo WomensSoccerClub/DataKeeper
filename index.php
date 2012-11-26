@@ -7,7 +7,7 @@
 <script type="text/javascript">
 $(window).load(function () {
    var searchHistory = getSearchHistory();
-   setConfigXML();
+   setKeyObjects();
 });
     
 $(document).ready(function() {
@@ -48,7 +48,8 @@ $(document).ready(function() {
             });
          
    }
-   function setConfigXML()
+
+   function setKeyObjects()
    {
       var HTML_FILE_URL = 'config.xml';
 
@@ -79,7 +80,21 @@ $(document).ready(function() {
      
      $.each(Tables, function(key, value) {
           var name = $(this).attr("name");
-       $("#TableSelector > tbody:last").append("<tr onclick=''><td>"+name+"</td></tr>");
+       $("#TableSelector > tbody:last").append("<tr onclick='javascript:selectColumnObject(this)'><td>"+name+"</td></tr>");
+       //string += "<tr>"+name+"</tr>"
+       });
+  }
+  function populateColumnSelector(data,TableObject)
+  {
+      var columns = $(data).find("table[name='"+TableObject+"']").find("column");
+      //alert(columns.length);
+      $("#ColumnSelector tbody").html("<th class='title' colspan=\"2\"></th>"); //erase all but header
+      $("#ColumnSelector th").html(TableObject); //set the header to the current selected KeyObject
+      
+     
+     $.each(columns, function(key, value) {
+          var name = $(this).attr("name");
+       $("#ColumnSelector > tbody:last").append("<tr onclick=''><td>"+name+"</td><td><input type=\"text\" name=\"\"></td></tr>");
        //string += "<tr>"+name+"</tr>"
        });
   }
@@ -92,6 +107,18 @@ $(document).ready(function() {
 
     $.get(HTML_FILE_URL, function(data) {
         populateTableSelector(data,name);
+        populateColumnSelector(null,"Column")
+    });
+   }
+   function selectColumnObject(element)
+   {
+    var name = $(element).find("td").html();
+    $(element).addClass("selected");
+    var HTML_FILE_URL = 'config.xml';
+
+    $.get(HTML_FILE_URL, function(data) {
+        //alert($(data).val());
+        populateColumnSelector(data,name);
         
     });
    }
@@ -185,7 +212,7 @@ $(document).ready(function() {
             </table>
             <table id="ColumnSelector" class="selector">
                 <tbody>
-                    <th class="title" >Columns</th>
+                    <th class="title" colspan="2">Columns</th>
                 </tbody>
             </table>
         </div>

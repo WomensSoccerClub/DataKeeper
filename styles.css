@@ -112,7 +112,14 @@ a#searchButton:hover {
     display: none; 
     width: fit-content;
     clear: both;
-    margin-left: 25%;
+    margin-left: 20%;
 }
 
+#ColumnSelector {
+    width:auto;
+    font-weight: 15px;
+}
 
+#ColumnSelector input{
+    height:20px;
+}
