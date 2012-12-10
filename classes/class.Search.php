@@ -135,7 +135,7 @@ class Search
                         if($table != null)
                             $query .= "$table, ";
 		}
-		$query = substr($query,0,-2) . "<br /> WHERE "; // remove last ", "
+		$query = substr($query,0,-2) . " WHERE "; // remove last ", "
 		
 		
 		// WHERE condition1 AND condition2 AND ... conditionN
@@ -185,16 +185,35 @@ class Search
     }
 
 } /* end of class server_Search */
+/**
+ * 
+ * Test Segment BEGIN
+ */
+//$criterion[] = new ColumnObject("Member ID", "MEMBER_IDENTIFIER","int(11)", "womensso_wsc.T_MEMBER");
+$criterion["Humana"] = new ColumnObject("Company Name","COMPANY_NAME", "varchar(40)", "womensso_wsc.T_HEALTH_INSURANCE");
+//$criterion[] = new ColumnObject("water polo", "liquid_polo", "varchar(10)", "db5h.tableized");
 
-$criterion[] = new ColumnObject("cats", "all_my_cats","varchar(20)", "database1.tableA");
-$criterion[] = new ColumnObject("dogs","that_dog_of_mine", "varchar(10)", "databaseDh.table2");
-$criterion[] = new ColumnObject("water polo", "liquid_polo", "varchar(10)", "db5h.tableized");
-
-foreach($criterion as $what)
+foreach($criterion as $key => $what)
 {
-    $what->setValue("ham" . $what->owner);
+    $what->setValue($key);
 }
 $search1 = new Search("batman", $criterion , 50, "12/12/2012");
-echo $search1;
-echo "<br />" . $search1->getQuery();
+echo $search1 . "<br />";
+//phpinfo();
+$dbh = mysql_connect(ini_get("mysql.default_host"), "Brian", "mysqlpassword1!") or die("Unable to connect to MySQL");
+//echo $dbh;
+$newquery = $search1->getQuery();
+echo $newquery . "<br />";
+$result = mysql_query($newquery);
+while($record = mysql_fetch_assoc($result))
+{
+    print_r($record);
+    echo "<br />";
+    $records[] = $record;
+}
+
+/*
+ * 
+ * Test Segment END
+ */
 ?>
