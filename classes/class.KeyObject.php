@@ -38,8 +38,9 @@ function __construct($name) {
    
 function getTables()
 {
+    $root = $_SERVER["DOCUMENT_ROOT"];
     $xml = new DOMDocument();
-    $location = "../config.xml";
+    $location = $root."/config.xml";
     
     if(!file_exists($location))   //if the file doesn't exists
     {
@@ -102,9 +103,6 @@ function getRelatedKeyObjects()
 
 } /* end of class databases_KeyObject */
 
-
-$KeyObject = new KeyObject("Member");
-$KeyObject = new KeyObject("Player");
 
 
 ?>

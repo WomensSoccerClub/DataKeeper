@@ -40,8 +40,9 @@ class TableObject
 
     public function getColumns()
     {
-        $xml = new DOMDocument();
-    $location = "../config.xml";
+    $xml = new DOMDocument();
+    $root = $_SERVER["DOCUMENT_ROOT"];
+    $location = "$root/config.xml";
     
     if(!file_exists($location))   //if the file doesn't exists
     {
