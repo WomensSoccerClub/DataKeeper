@@ -25,28 +25,21 @@ if (0 > version_compare(PHP_VERSION, '5')) {
  *
  * @author firstname and lastname of author, <author@example.org>
  */
-require_once('client/class.HTMLObject.php');
-
-/**
- * include server_Object
- *
- * @author firstname and lastname of author, <author@example.org>
- */
-require_once('server/class.Object.php');
+//require_once('client/class.HTMLObject.php');
 
 /**
  * include server_Search
  *
  * @author firstname and lastname of author, <author@example.org>
  */
-require_once('server/class.Search.php');
+require_once('class.Search.php');
 
 /**
  * include server_TableObject
  *
  * @author firstname and lastname of author, <author@example.org>
  */
-require_once('server/class.TableObject.php');
+require_once('class.TableObject.php');
 
 /* user defined includes */
 // section -64--88-2-3--5e821307:13aa8f73ca8:-8000:000000000000089E-includes begin
@@ -64,35 +57,11 @@ require_once('server/class.TableObject.php');
  * @package server
  */
 class ColumnObject
-    extends Object
 {
-    // --- ASSOCIATIONS ---
-    // generateAssociationEnd :     // generateAssociationEnd :     // generateAssociationEnd : 
-
-    // --- ATTRIBUTES ---
-
-    /**
-     * Short description of attribute columnName
-     *
-     * @access public
-     * @var String
-     */
+    public $alias = null;
     public $columnName = null;
-
-    /**
-     * Short description of attribute sqlDataType
-     *
-     * @access public
-     * @var String
-     */
     public $sqlDataType = null;
-
-    /**
-     * Short description of attribute owner
-     *
-     * @access public
-     * @var TableObject
-     */
+    public $value = null;
     public $owner = null;
 
     // --- OPERATIONS ---

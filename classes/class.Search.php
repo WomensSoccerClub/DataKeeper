@@ -25,14 +25,8 @@ if (0 > version_compare(PHP_VERSION, '5')) {
  *
  * @author firstname and lastname of author, <author@example.org>
  */
-require_once('server/class.ColumnObject.php');
+require_once('class.ColumnObject.php');
 
-/**
- * include server_DataKeeperCore
- *
- * @author firstname and lastname of author, <author@example.org>
- */
-require_once('server/class.DataKeeperCore.php');
 /**
  * Short description of class server_Search
  *
@@ -56,7 +50,7 @@ class Search
      * @access public
      * @var ColumnObject
      */
-    public $columnCriterionList = null;
+    public $columnCriteriaList = null;
 
     /**
      * Short description of attribute freqCounter
@@ -104,10 +98,9 @@ class Search
     }
 
     /**
-     * Short description of method getQuery
+     * This method will build a SQL query based on the columnCriterionList and return it in the form a a string.
      *
      * @access public
-     * @author firstname and lastname of author, <author@example.org>
      * @return String
      */
     public function getQuery()
@@ -127,27 +120,6 @@ class Search
         // section -64--88--106-1--6c338a91:13aaa68e2e6:-8000:0000000000000A36 begin
         // section -64--88--106-1--6c338a91:13aaa68e2e6:-8000:0000000000000A36 end
     }
-
-    /**
-     * Short description of method setCurrentSearch
-     *
-     * @access public
-     * @author firstname and lastname of author, <author@example.org>
-     * @return mixed
-     */
-    public function setCurrentSearch()
-    {
-        // section -64--88--106-1--6c338a91:13aaa68e2e6:-8000:0000000000000A3B begin
-        // section -64--88--106-1--6c338a91:13aaa68e2e6:-8000:0000000000000A3B end
-    }
-
-    /**
-     * Short description of method Search
-     *
-     * @access public
-     * @author firstname and lastname of author, <author@example.org>
-     * @return mixed
-     */
 
 } /* end of class server_Search */
 

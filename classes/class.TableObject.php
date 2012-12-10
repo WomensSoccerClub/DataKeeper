@@ -25,29 +25,14 @@ if (0 > version_compare(PHP_VERSION, '5')) {
  *
  * @author firstname and lastname of author, <author@example.org>
  */
-require_once('databases/class.KeyObject.php');
+require_once('class.KeyObject.php');
 
 /**
  * include server_ColumnObject
  *
  * @author firstname and lastname of author, <author@example.org>
  */
-require_once('server/class.ColumnObject.php');
-
-/**
- * include server_Object
- *
- * @author firstname and lastname of author, <author@example.org>
- */
-require_once('server/class.Object.php');
-
-/* user defined includes */
-// section -64--88-2-3--5e821307:13aa8f73ca8:-8000:000000000000087A-includes begin
-// section -64--88-2-3--5e821307:13aa8f73ca8:-8000:000000000000087A-includes end
-
-/* user defined constants */
-// section -64--88-2-3--5e821307:13aa8f73ca8:-8000:000000000000087A-constants begin
-// section -64--88-2-3--5e821307:13aa8f73ca8:-8000:000000000000087A-constants end
+require_once('class.ColumnObject.php');
 
 /**
  * Short description of class server_TableObject
@@ -56,8 +41,7 @@ require_once('server/class.Object.php');
  * @author firstname and lastname of author, <author@example.org>
  * @package server
  */
-class server_TableObject
-    extends server_Object
+class TableObject
 {
     // --- ASSOCIATIONS ---
     // generateAssociationEnd :     // generateAssociationEnd : 
