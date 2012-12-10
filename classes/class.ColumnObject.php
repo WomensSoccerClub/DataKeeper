@@ -77,6 +77,11 @@ class ColumnObject
     {
          return "Alias: ".$this->alias."<br />ColumnName: ".$this->columnName."<br />Datatype: ".$this->sqlDataType."<br />Owner: ".$this->owner."<br />";
     }
+    
+    public function setValue($val)
+    {
+        $this->value = $val;
+    }
 
 } /* end of class server_ColumnObject */
 
