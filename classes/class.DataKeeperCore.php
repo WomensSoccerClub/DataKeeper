@@ -24,19 +24,48 @@ require_once('class.KeyObject.php');
 require_once('class.Search.php');
 require_once('class.TableObject.php');
 require_once('class.ColumnObject.php');
+/**
+ * Class casting
+ *
+ * @param string|object $destination
+ * @param object $sourceObject
+ * @return object
+ */
+function cast($destination, $sourceObject)
+{
+    if (is_string($destination)) {
+        $destination = new $destination();
+    }
+    $sourceReflection = new ReflectionObject($sourceObject);
+    $destinationReflection = new ReflectionObject($destination);
+    $sourceProperties = $sourceReflection->getProperties();
+    foreach ($sourceProperties as $sourceProperty) {
+        $sourceProperty->setAccessible(true);
+        $name = $sourceProperty->getName();
+        $value = $sourceProperty->getValue($sourceObject);
+        if ($destinationReflection->hasProperty($name)) {
+            $propDest = $destinationReflection->getProperty($name);
+            $propDest->setAccessible(true);
+            $propDest->setValue($destination,$value);
+        } else {
+            $destination->$name = $value;
+        }
+    }
+    return $destination;
+}
 
 function LoadObjectsFromXML($tag)
 {
     $xml = new DOMDocument();
-    $location = "/config.xml";
+    $location = "../config.xml";
     
     if(!file_exists($location))   //if the file doesn't exists
     {
         echo "The config file \"$location\" was not found. This is horribly wrong.";
         exit;
     }
-
-    $xml->loadHTMLFile($location);
+    $theXML = file_get_contents($location);
+    $xml->loadXML($theXML);
     $Objects = $xml->getElementsByTagName($tag);
     
     return $Objects;
