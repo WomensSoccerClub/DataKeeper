@@ -20,18 +20,7 @@ if (0 > version_compare(PHP_VERSION, '5')) {
     die('This file was generated for PHP 5');
 }
 
-/**
- * include databases_KeyObject
- *
- * @author firstname and lastname of author, <author@example.org>
- */
 require_once('class.KeyObject.php');
-
-/**
- * include server_ColumnObject
- *
- * @author firstname and lastname of author, <author@example.org>
- */
 require_once('class.ColumnObject.php');
 
 /**
@@ -43,96 +32,63 @@ require_once('class.ColumnObject.php');
  */
 class TableObject
 {
-    // --- ASSOCIATIONS ---
-    // generateAssociationEnd :     // generateAssociationEnd : 
-
-    // --- ATTRIBUTES ---
-
-    /**
-     * Short description of attribute databaseName
-     *
-     * @access public
-     * @var String
-     */
+    
+    public $alias = null;
+    public $tableName = null;
+    public $columnList = array();
     public $databaseName = null;
 
-    /**
-     * Short description of attribute columnList
-     *
-     * @access public
-     * @var ColumnObject
-     */
-    public $columnList = null;
-
-    /**
-     * Short description of attribute primaryKey
-     *
-     * @access public
-     * @var String
-     */
-    public $primaryKey = null;
-
-    // --- OPERATIONS ---
-
-    /**
-     * Short description of method getFullName
-     *
-     * @access public
-     * @author firstname and lastname of author, <author@example.org>
-     * @return String
-     */
-    public function getFullName()
+    public function getColumns()
     {
-        $returnValue = null;
+        $xml = new DOMDocument();
+    $location = "../config.xml";
+    
+    if(!file_exists($location))   //if the file doesn't exists
+    {
+        echo "The config file \"$location\" was not found. This is horribly wrong.";
+        exit;
+    }
+    $theXML = file_get_contents($location);
+    $xml->loadXML($theXML);
+    $KeyObjects = $xml->getElementsByTagName("table");
 
-        // section -122-48--89-8--1e6caf83:13aa9af80f4:-8000:00000000000009F6 begin
-        // section -122-48--89-8--1e6caf83:13aa9af80f4:-8000:00000000000009F6 end
-
-        return $returnValue;
+    foreach($KeyObjects as $domElement)
+    {
+        if($domElement->getAttribute("name") == $this->alias) //if the element is the object we're looking for
+            break;
+    }
+    
+    $tableNodes = $domElement->getElementsByTagName("column");
+    $columnsArray = array();
+    
+    foreach($tableNodes as $tableElement) //loop to find all tables
+    {
+            //$databaseName = $tableElement->getElementsByTagName("database")->item(0)->nodeValue;
+            $alias = $tableElement->getAttribute("name");
+            $columnName = $tableElement->nodeValue;
+            $sqlDataType = $tableElement->getAttribute("datatype");
+            $columnsArray[] = new ColumnObject($alias,$columnName,$sqlDataType, $this->databaseName.".".$this->tableName );
+           // echo $tableElement->getAttribute("name");
+      
+        
+    }
+    return $columnsArray;
     }
 
-    /**
-     * Short description of method getColumnsList
-     *
-     * @access public
-     * @author firstname and lastname of author, <author@example.org>
-     * @return server_ColumnObject
-     */
-    public function getColumnsList()
+    public function __construct($alias, $tableName, $databaseName)
     {
-        $returnValue = null;
-
-        // section -122-48--89-8--1e6caf83:13aa9af80f4:-8000:0000000000000A1E begin
-        // section -122-48--89-8--1e6caf83:13aa9af80f4:-8000:0000000000000A1E end
-
-        return $returnValue;
+        $this->alias = $alias;
+        $this->tableName = $tableName;
+        $this->databaseName = $databaseName;
+        $this->columnList = $this::getColumns();
+        
+       
     }
-
-    /**
-     * Short description of method updateTable
-     *
-     * @access public
-     * @author firstname and lastname of author, <author@example.org>
-     */
-    public function updateTable()
+    
+    public function __toString()
     {
-        // section -64--88--106-1-2306742:13aaa869672:-8000:0000000000000A66 begin
-        // section -64--88--106-1-2306742:13aaa869672:-8000:0000000000000A66 end
+         return "Alias: ".$this->alias."<br />TableName: ".$this->tableName."<br />DatabaseName: ".$this->databaseName."<br />";
     }
-
-    /**
-     * Short description of method TableObject
-     *
-     * @access public
-     * @author firstname and lastname of author, <author@example.org>
-     * @return mixed
-     */
-    public function TableObject()
-    {
-        // section -64--88--106-1-1d17cda6:13aff8f3ef5:-8000:0000000000000AB6 begin
-        // section -64--88--106-1-1d17cda6:13aff8f3ef5:-8000:0000000000000AB6 end
-    }
-
 } /* end of class server_TableObject */
 
 ?>
