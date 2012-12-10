@@ -70,6 +70,28 @@ function LoadObjectsFromXML($tag)
     
     return $Objects;
 }
+function updateSearchHistory(){
 
+    $history = new DOMDocument();
+    $location = "../searchHistory/searchHistory.xml";
+    
+     if(!file_exists($location))   //if the file doesn't exists
+    {
+        echo "The config file \"$location\" was not found. This is horribly wrong.";
+        exit;
+    }
+    
+    $theXML = file_get_contents($location);
+    echo $theXML;
+    $history->loadXML($theXML);
+    $list = $history->getElementsByTagName("search");
+    
+    foreach($list as $value){
+        echo $value->getAttribute("name");
+    }
+    
+}
+updateSearchHistory();
+    
 
 ?>
