@@ -62,67 +62,25 @@ class ColumnObject
     public $columnName = null;
     public $sqlDataType = null;
     public $value = null;
-    public $owner = null;
+    public $owner = null; //"database.table"
 
-    // --- OPERATIONS ---
-
-    /**
-     * Short description of method getValue
-     *
-     * @access public
-     * @author firstname and lastname of author, <author@example.org>
-     * @return String
-     */
-    public function getValue()
+    public function __construct($alias, $columnName, $sqlDataType, $owner)
     {
-        $returnValue = null;
-
-        // section -122-48--89-8--1e6caf83:13aa9af80f4:-8000:00000000000009F8 begin
-        // section -122-48--89-8--1e6caf83:13aa9af80f4:-8000:00000000000009F8 end
-
-        return $returnValue;
+        $this->alias = $alias;
+        $this->columnName = $columnName;
+        $this->sqlDataType = $sqlDataType;
+        $this->owner = $owner;
+       
     }
-
-    /**
-     * Short description of method getHTMLObject
-     *
-     * @access public
-     * @author firstname and lastname of author, <author@example.org>
-     * @return client_HTMLObject
-     */
-    public function getHTMLObject()
+    
+    public function __toString()
     {
-        $returnValue = null;
-
-        // section -122-48--89-8--1e6caf83:13aa9af80f4:-8000:00000000000009FF begin
-        // section -122-48--89-8--1e6caf83:13aa9af80f4:-8000:00000000000009FF end
-
-        return $returnValue;
+         return "Alias: ".$this->alias."<br />ColumnName: ".$this->columnName."<br />Datatype: ".$this->sqlDataType."<br />Owner: ".$this->owner."<br />";
     }
-
-    /**
-     * Short description of method updateColumn
-     *
-     * @access public
-     * @author firstname and lastname of author, <author@example.org>
-     */
-    public function updateColumn()
+    
+    public function setValue($val)
     {
-        // section -64--88--106-1-2306742:13aaa869672:-8000:0000000000000A68 begin
-        // section -64--88--106-1-2306742:13aaa869672:-8000:0000000000000A68 end
-    }
-
-    /**
-     * Short description of method ColumnObject
-     *
-     * @access public
-     * @author firstname and lastname of author, <author@example.org>
-     * @return mixed
-     */
-    public function ColumnObject()
-    {
-        // section -64--88--106-1-1d17cda6:13aff8f3ef5:-8000:0000000000000AB2 begin
-        // section -64--88--106-1-1d17cda6:13aff8f3ef5:-8000:0000000000000AB2 end
+        $this->value = $val;
     }
 
 } /* end of class server_ColumnObject */
