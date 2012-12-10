@@ -1,19 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Here is the heirarchy of how each search is stored:
-search contains:
-id, query, popularity, date
-
-the id will be the unique identifier for the search
-the date will be the last time the query was used
-the popularity will be the number of times the query has been used
-the query will be the query itself
-
--->
-
-
-
-
 <root>
     <searches>
         <search id="0" date="2012-11-10" popularity="5" query="Seach for this."></search>
