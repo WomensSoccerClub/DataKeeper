@@ -205,7 +205,7 @@ class Search
  * Test Segment BEGIN
  */
 //$criterion[] = new ColumnObject("Member ID", "MEMBER_IDENTIFIER","int(11)", "womensso_wsc.T_MEMBER");
-$criterion["ana"] = new ColumnObject("Company Name","COMPANY_NAME", "varchar(40)", "womensso_wsc.T_HEALTH_INSURANCE");
+$criterion["ealth"] = new ColumnObject("Company Name","COMPANY_NAME", "varchar(40)", "womensso_wsc.T_HEALTH_INSURANCE");
 //$criterion[] = new ColumnObject("water polo", "liquid_polo", "varchar(10)", "db5h.tableized");
 
 foreach($criterion as $key => $what)
@@ -226,6 +226,7 @@ while($record = mysql_fetch_assoc($result))
     echo "<br />";
     $records[] = $record;
 }
+echo $search1->toUserString();
 
 /*
  * 
