@@ -1,5 +1,9 @@
 <?php
-
+require_once('class.KeyObject.php');
+require_once('class.Search.php');
+require_once('class.TableObject.php');
+require_once('class.ColumnObject.php');
+session_start();
 error_reporting(E_ALL);
 
 /**
@@ -20,17 +24,42 @@ if (0 > version_compare(PHP_VERSION, '5')) {
     die('This file was generated for PHP 5');
 }
 
-require_once('class.KeyObject.php');
-require_once('class.Search.php');
-require_once('class.TableObject.php');
-require_once('class.ColumnObject.php');
-/**
- * Class casting
- *
- * @param string|object $destination
- * @param object $sourceObject
- * @return object
- */
+
+$KeyObjects = array();
+$KeyObjectXML = LoadObjectsFromXML("KeyObject");
+foreach($KeyObjectXML as $KeyObjectElement)
+{
+    $KeyObjects[]=$KeyObjectElement->getAttribute("name");
+}
+
+
+if(isset($_GET['KeyObjectSelect'])) //keeping track of the current KeyObject the user is searching for
+{
+    echo $_SESSION['CURRENT_KEYOBJECT'];
+    $_SESSION['CURRENT_KEYOBJECT']=$_GET['KeyObjectSelect'];
+    
+}
+
+if(isset($_GET['AddToSearch'])) //adding a column to the current search
+{
+   $columnName = $_GET['columnName'];
+   $value = $_GET['value'];
+   $owner = $_GET['owner'];
+   
+   $newColumn = new ColumnObject(null, $columnName, null, $owner);
+   $newColumn->setValue($value);
+   $_SESSION['CURRENT_SEARCH'][] = $newColumn;
+   print_r($_SESSION['CURRENT_SEARCH']);
+   $search = new Search(null, $_SESSION['CURRENT_SEARCH'], null, null);
+   echo $search->getQuery();
+}
+
+if(isset($_GET['ClearSearch'])) //if ClearSearch exists, do just that.
+{
+    $_SESSION['CURRENT_SEARCH']=null;
+}
+
+
 function cast($destination, $sourceObject)
 {
     if (is_string($destination)) {
@@ -56,8 +85,9 @@ function cast($destination, $sourceObject)
 
 function LoadObjectsFromXML($tag)
 {
+    $root = $_SERVER["DOCUMENT_ROOT"];
     $xml = new DOMDocument();
-    $location = "../config.xml";
+    $location = $root."/config.xml";
     
     if(!file_exists($location))   //if the file doesn't exists
     {
