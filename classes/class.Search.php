@@ -189,28 +189,28 @@ class Search
  * 
  * Test Segment BEGIN
  */
-//$criterion[] = new ColumnObject("Member ID", "MEMBER_IDENTIFIER","int(11)", "womensso_wsc.T_MEMBER");
-$criterion["Humana"] = new ColumnObject("Company Name","COMPANY_NAME", "varchar(40)", "womensso_wsc.T_HEALTH_INSURANCE");
-//$criterion[] = new ColumnObject("water polo", "liquid_polo", "varchar(10)", "db5h.tableized");
-
-foreach($criterion as $key => $what)
-{
-    $what->setValue($key);
-}
-$search1 = new Search("batman", $criterion , 50, "12/12/2012");
-echo $search1 . "<br />";
-//phpinfo();
-$dbh = mysql_connect(ini_get("mysql.default_host"), "Brian", "mysqlpassword1!") or die("Unable to connect to MySQL");
-//echo $dbh;
-$newquery = $search1->getQuery();
-echo $newquery . "<br />";
-$result = mysql_query($newquery);
-while($record = mysql_fetch_assoc($result))
-{
-    print_r($record);
-    echo "<br />";
-    $records[] = $record;
-}
+////$criterion[] = new ColumnObject("Member ID", "MEMBER_IDENTIFIER","int(11)", "womensso_wsc.T_MEMBER");
+//$criterion["Humana"] = new ColumnObject("Company Name","COMPANY_NAME", "varchar(40)", "womensso_wsc.T_HEALTH_INSURANCE");
+////$criterion[] = new ColumnObject("water polo", "liquid_polo", "varchar(10)", "db5h.tableized");
+//
+//foreach($criterion as $key => $what)
+//{
+//    $what->setValue($key);
+//}
+//$search1 = new Search("batman", $criterion , 50, "12/12/2012");
+//echo $search1 . "<br />";
+////phpinfo();
+//$dbh = mysql_connect(ini_get("mysql.default_host"), "Brian", "mysqlpassword1!") or die("Unable to connect to MySQL");
+////echo $dbh;
+//$newquery = $search1->getQuery();
+//echo $newquery . "<br />";
+//$result = mysql_query($newquery);
+//while($record = mysql_fetch_assoc($result))
+//{
+//    print_r($record);
+//    echo "<br />";
+//    $records[] = $record;
+//}
 
 /*
  * 
