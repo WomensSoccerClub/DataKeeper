@@ -1,3 +1,7 @@
+<?php
+
+$_SESSION['CURRENT_KEYOBJECT'] = ""; //keep track of the KeyObject the user is looking for
+?>
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="styles.css">
@@ -24,14 +28,32 @@ $(document).ready(function() {
             $("#searchChoiceLeft").css("background","white");
             $("#searchHistory").hide("medium",null);
             $("#customSearch").show('medium',null);
+            $("#query").attr("disabled", "disabled");
         }       
     });
     
-    $('.selector td').click(function (e) {
-        alert("test");
+    $("input.column").keyup(function(event) {
+       alert($(this).attr("class"));
+       //addColumnToSearch(this);
     });
-    
+
   });
+  function setCurrentKeyObject(KeyObjectString, element)
+  {
+      $.ajax({
+                type: 'GET',
+                url: 'classes/class.DataKeeperCore.php',
+                dataType: "html",
+                data: "KeyObjectSelect="+KeyObjectString ,
+                success: function(data) { 
+                  $("#"+data).parent("tr").removeClass("selected");
+                  $(element).addClass("selected");
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                  alert(xhr.status+""+thrownError);
+                }
+            });
+  }
   function getSearchHistory()
    {
             $.ajax({
@@ -48,30 +70,41 @@ $(document).ready(function() {
             });
          
    }
-
-   function setKeyObjects()
+  function setKeyObjects()
    {
       var HTML_FILE_URL = 'config.xml';
 
-    $.get(HTML_FILE_URL, function(data) {
-        populateKeyObjectSelector(data);
-        
-    });
-   }
-   
+        $.ajax({
+                type: 'GET',
+                url: HTML_FILE_URL,
+                dataType: "html",
+                data: "" ,
+                cache: false,
+                success: function(data) { 
+                  populateKeyObjectSelector(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                  alert(xhr.status+""+thrownError);
+                }
+            });
+
+        } 
   function populateKeyObjectSelector(xml)
   {
-      var KeyObjects = $(xml).find("KeyObjects").children(); //get all <KeyObject> tags
-      
+      var KeyObjects = $(xml).filter("KeyObjects").children(); //get all <KeyObject> tags
+
       $.each(KeyObjects, function(key, value) {
+          //alert(key+" "+value);
           var name = $(this).attr("name");
-       $("#KeyObjectSelector > tbody:last").append("<tr onclick=\"javascript:selectKeyObject(this)\"><td>"+name+"</td></tr>");
+          
+       $("#KeyObjectSelector > tbody:last").append("<tr onclick=\"javascript:selectKeyObject(this);\"><td id=\""+name+"\">"+name+"</td></tr>");
        //string += "<tr>"+name+"</tr>"
       });
 
   }
   function populateTableSelector(data,KeyObject)
   {
+      
       var Tables = $(data).find("KeyObject[name="+KeyObject+"]").find("table");
    
       $("#TableSelector tbody").html("<th class='title'></th>"); //erase all but header
@@ -80,50 +113,67 @@ $(document).ready(function() {
      
      $.each(Tables, function(key, value) {
           var name = $(this).attr("name");
-       $("#TableSelector > tbody:last").append("<tr onclick='javascript:selectColumnObject(this)'><td>"+name+"</td></tr>");
+       $("#TableSelector > tbody:last").append("<tr onclick='javascript:selectTableObject(this);'><td>"+name+"</td></tr>");
        //string += "<tr>"+name+"</tr>"
        });
   }
-  function populateColumnSelector(data,TableObject)
+  function populateColumnSelector(data,TableObject, database)
   {
-      var columns = $(data).find("table[name='"+TableObject+"']").find("column");
-      //alert(columns.length);
       $("#ColumnSelector tbody").html("<th class='title' colspan=\"2\"></th>"); //erase all but header
       $("#ColumnSelector th").html(TableObject); //set the header to the current selected KeyObject
-      
-     
-     $.each(columns, function(key, value) {
+
+    
+     $.each(data, function(key, value) {
           var name = $(this).attr("name");
-       $("#ColumnSelector > tbody:last").append("<tr onclick=''><td>"+name+"</td><td><input type=\"text\" name=\"\"></td></tr>");
+          var columnName = $(this).text();
+          
+          var owner = database+"."+TableObject;
+       $("#ColumnSelector > tbody:last").append("<tr onclick=''><td>"+name+"</td><td><input type=\"text\" id=\""+columnName+"\" class=\"column\" owner=\""+owner+"\"><input type=\"button\" onclick=\"addColumnToSearch(this);\" name=\""+columnName+"\"></td></tr>");
        //string += "<tr>"+name+"</tr>"
        });
-  }
-  
-   function selectKeyObject(element)
+  } 
+  function selectKeyObject(element)
+   {
+    var KeyObjectName = $(element).find("td").html();
+    setCurrentKeyObject(KeyObjectName, element)
+    
+    var HTML_FILE_URL = 'config.xml';
+    $.ajax({
+                type: 'GET',
+                url: HTML_FILE_URL,
+                dataType: "html",
+                cache: false,
+                data: "" ,
+                success: function(data) { 
+                  populateTableSelector(data,KeyObjectName);
+                  populateColumnSelector("null","Columns") //set the column to be empty
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                  alert(xhr.status+""+thrownError);
+                }
+          });
+
+   }
+  function selectTableObject(element)
    {
     var name = $(element).find("td").html();
     $(element).addClass("selected");
-    var HTML_FILE_URL = 'config.xml';
 
-    $.get(HTML_FILE_URL, function(data) {
-        populateTableSelector(data,name);
-        populateColumnSelector(null,"Column")
-    });
-   }
-   function selectColumnObject(element)
-   {
-    var name = $(element).find("td").html();
-    $(element).addClass("selected");
-    var HTML_FILE_URL = 'config.xml';
-
-    $.get(HTML_FILE_URL, function(data) {
-        //alert($(data).val());
-        populateColumnSelector(data,name);
-        
-    });
-   }
-   
-   function placeInSearch(tableRowQuery)
+    $.ajax({
+                type: 'GET',
+                url: 'config.xml',
+                cache: false,
+                success: function(data) { 
+                   var database = $(data).find("table[name='"+name+"']").find("database").text();
+                   var columns = $(data).find("table[name='"+name+"']").find("column");
+                   populateColumnSelector(columns,name, database);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                  alert(xhr.status+""+thrownError);
+                }
+          });
+   } 
+  function placeInSearch(tableRowQuery)
    {
        var query = $(tableRowQuery).find("td[name=query]").html();
        $("#query").val(query);
@@ -162,7 +212,27 @@ $(document).ready(function() {
       html += '</tr></table>'; // Finish up
       $('#searchHistory').append(html); // And add to document
 }
-
+  function addColumnToSearch(element)
+  {
+      var columnName = $(element).attr("name");
+      var value = $("#"+columnName).val();
+      var owner = $("#"+columnName).attr("owner");
+      $.ajax({
+                type: 'GET',
+                url: '/classes/class.DataKeeperCore.php',
+                dataType: "html",
+                data: "AddToSearch=true&columnName="+columnName+"&value="+value+"&owner="+owner ,
+                cache: false,
+                success: function(data) { 
+                    alert(data);
+                    $("#query").val(data)
+                  //populateKeyObjectSelector(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                  alert(xhr.status+""+thrownError);
+                }
+       });
+  }
 
 </script>
 </head>
@@ -224,8 +294,4 @@ $(document).ready(function() {
     
     </center>
 </html>
-<?php
 
-
-
-?>

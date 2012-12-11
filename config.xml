@@ -133,7 +133,7 @@ The following is the configuration for how the DataKeeper tool will associate th
         
         <table name="Administrator Details" value="T_ADMINISTRATORS">
            <database>womensso_sessionmanagement</database>
-           <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column>
+          <!--  <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column> --> 
            <column name="Administrator ID" datatype="int(11)">ADMINISTRATOR_IDENTIFIER</column>
            <column name="Administrator Page ID" datatype="int(11)" class="lookup" lookupTable="T_ADMINISTRATOR_PAGES" lookupColumn="ADMINISTRATOR_PAGE_NAME">ADMINISTRATOR_PAGE_IDENTIFIER</column>
         </table>
@@ -172,7 +172,7 @@ The following is the configuration for how the DataKeeper tool will associate th
         
         <table name="GI Details" value="T_GI">
            <database>womensso_sessionmanagement</database>
-           <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column>
+           <!-- <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column> -->
            <column name="GI ID" datatype="int(11)">GI_IDENTIFIER</column>
            <column name="GI Type" datatype="int(11)" class="lookup" lookupTable="T_GI_TYPES" lookupColumn="GI_TYPE_TEXT">GI_TYPE_IDENTIFIER</column>
            <column name="Year" datatype="year" >Year</column> 
@@ -190,7 +190,7 @@ The following is the configuration for how the DataKeeper tool will associate th
         
         <table name="Fee Details" value="T_MEMEBER_FEE">
            <database>womensso_money</database>
-           <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column>
+        <!--    <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column> -->
            <column name="Fee ID" datatype="int(11)">MEMBER_FEE_IDENTIFIER</column>
            <column name="Team ID" datatype="int(11)">TEAM_IDENTIFIER</column>
            <column name="Fee Discriptor" datatype="varchar(50)" >FEE_DISCRIPTOR</column> 
@@ -307,7 +307,7 @@ The following is the configuration for how the DataKeeper tool will associate th
            <column name="Date" datatype="date">DATE</column>
            <column name="Time" datatype="time">TIME</column>
            <column name="Field Number" datatype="varchar(5)">FIELD_NUMBER</column>
-           <column name="Location ID" datatype="int(11)"Vclass="lookup" lookupTable="T_LOCATIONS" lookupColumn="LOCATION_NAME">LOCATION_IDENTIFIER</column>
+           <column name="Location ID" datatype="int(11)" class="lookup" lookupTable="T_LOCATIONS" lookupColumn="LOCATION_NAME">LOCATION_IDENTIFIER</column>
            <column name="Referee ID" datatype="int(11)" class="lookup" lookupTable="T_REFEREES" lookupColumn="NAME">REFEREE_IDENTIFIER</column>
            <column name="Home Team Points" datatype="int(11)">HOME_TEAM_POINTS</column>
            <column name="Away Team Points" datatype="int(11)">AWAY_TEAM_POINTS</column>
