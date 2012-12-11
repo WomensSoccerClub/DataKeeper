@@ -116,7 +116,7 @@ class Search
 		foreach($this->columnCriteriaList as $item)
 		{
                     $tableNames[] = $item->owner;   
-                    $whereClauses[] = "$item->owner.$item->columnName LIKE \"$item->value\"";
+                    $whereClauses[] = "$item->owner.$item->columnName LIKE \"%$item->value%\"";
 		}
                 $tableNameList = array_unique($tableNames);
                 unset($tableNames);
@@ -125,8 +125,7 @@ class Search
 		for(int $i=1; $i<$tableNames->count();i++)
 		{
 			$whereClauses = "$tableNames[$i-1].
-		}
-		
+		}		
 		*/
 		
 		// FROM table1, table2, .. tableN
@@ -164,6 +163,22 @@ class Search
         // section -64--88--106-1--6c338a91:13aaa68e2e6:-8000:0000000000000A36 end
     }
     
+    public function toUserString()
+    {
+        $prettyString = null;
+        
+        if(!empty($this->columnCriteriaList))
+        {
+            $prettyString = "";
+            foreach($this->columnCriteriaList as $column)
+            {
+                $prettyString .= "$column->alias =\"$column->value\" ";
+            }
+        }
+        
+        return $prettyString;
+    }
+    
     public function __toString() {
         $returnString = null;
         $returnString = "Search Name: " . $this->searchName ."<br />Timestamp: " . $this->timeStamp .
@@ -190,7 +205,7 @@ class Search
  * Test Segment BEGIN
  */
 //$criterion[] = new ColumnObject("Member ID", "MEMBER_IDENTIFIER","int(11)", "womensso_wsc.T_MEMBER");
-$criterion["Humana"] = new ColumnObject("Company Name","COMPANY_NAME", "varchar(40)", "womensso_wsc.T_HEALTH_INSURANCE");
+$criterion["ana"] = new ColumnObject("Company Name","COMPANY_NAME", "varchar(40)", "womensso_wsc.T_HEALTH_INSURANCE");
 //$criterion[] = new ColumnObject("water polo", "liquid_polo", "varchar(10)", "db5h.tableized");
 
 foreach($criterion as $key => $what)
