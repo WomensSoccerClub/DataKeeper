@@ -30,27 +30,79 @@ class KeyObject
     public $relatedKeyObjects = array();
 
 function __construct($name) {
-       $this->name = $name;
-       $this->tableList = this::getTables();
-       $this->freqCounter = $freqCounter;
-       $this->timeStamp = $timeStamp;
+       $this->alias = $name;
+       $this->tableList = $this::getTables();
+       $this->relatedKeyObjects = $this::getRelatedKeyObjects();
+       
    }
    
 function getTables()
 {
-    $KeyObjects = new DOMNodeList(LoadObjectsFromXML("KeyObjects"));
-    $thisKeyObject = new DOMNode();
-    foreach($KeyObjects as $KeyObject)
+    $root = $_SERVER["DOCUMENT_ROOT"];
+    $xml = new DOMDocument();
+    $location = $root."/config.xml";
+    
+    if(!file_exists($location))   //if the file doesn't exists
     {
-        $node = new DOMNode($KeyObject);
-        if($node->nodeName == $this->name)
-            $thisKeyObject = $node;
+        echo "The config file \"$location\" was not found. This is horribly wrong.";
+        exit;
     }
-    $tableList = array();
-    $tableNodes = new DOMNodeList($thisKeyObject);
-    //need to put these tableNodes into TableObjects and return it as an array
+    $theXML = file_get_contents($location);
+    $xml->loadXML($theXML);
+    $KeyObjects = $xml->getElementsByTagName("KeyObject");
+
+    foreach($KeyObjects as $domElement)
+    {
+        if($domElement->getAttribute("name") == $this->alias) //if the element is the object we're looking for
+            break;
+    }
+    
+    $tableNodes = $domElement->getElementsByTagName("table");
+    $tableArray = array();
+    
+    foreach($tableNodes as $tableElement) //loop to find all tables
+    {
+            $databaseName = $tableElement->getElementsByTagName("database")->item(0)->nodeValue;
+            $alias = $tableElement->getAttribute("name");
+            $tableName = $tableElement->getAttribute("value");
+            $tableArray[] = new TableObject($alias,$tableName, $databaseName);
+           // echo $tableElement->getAttribute("name");
+      
+        
+    }
+    return $tableArray;
+    
+}
+
+function getRelatedKeyObjects()
+{
+    $xml = new DOMDocument();
+    $location = "../config.xml";
+    
+    if(!file_exists($location))   //if the file doesn't exists
+    {
+        echo "The config file \"$location\" was not found. This is horribly wrong.";
+        exit;
+    }
+    $theXML = file_get_contents($location);
+    $xml->loadXML($theXML);
+    $KeyObjects = $xml->getElementsByTagName("KeyObject");
+    foreach($KeyObjects as $domElement)
+    {
+        if($domElement->getAttribute("name") == $this->alias) //if the element is the object we're looking for
+            break;
+    }
+    $relatedNodes = $domElement->getElementsByTagName("KeyObject");
+    $relatedArray = array();
+    foreach($relatedNodes as $relatedElement) //loop to find all tables
+    {
+            $relatedArray[] = $relatedElement->nodeValue;
+    }
+    return $relatedArray;
 }
 
 } /* end of class databases_KeyObject */
+
+
 
 ?>

@@ -6,94 +6,94 @@ The following is the configuration for how the DataKeeper tool will associate th
     <KeyObject id="0" name="Member">
         
         <table name="Member" value="T_MEMBER">
-            <database>"womensso_wsc"</database>
-            <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column>
-            <column name="Username" datatype="varchar">USERNAME</column>
-            <column name="Last Name" datatype="varchar">LAST_NAME</column>
-            <column name="Middle Initial" datatype="char">MIDDLE_INITIAL_TEXT</column>
-            <column name="First Name" datatype="varchar">FIRST_NAME</column>
+            <database>womensso_wsc</database>
+            <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column>
+            <column name="Username" datatype="varchar(256)">USERNAME</column>
+            <column name="Last Name" datatype="varchar(40)">LAST_NAME</column>
+            <column name="Middle Initial" datatype="char(1)">MIDDLE_INITIAL_TEXT</column>
+            <column name="First Name" datatype="varchar(40)">FIRST_NAME</column>
             <column name="Birthdate" datatype="date">BIRTH_DATE</column>
-            <column name="Most Recent Level" datatype="char" class="lookup" lookupTable="T_LEVEL" >MOST_RECENT_LEVEL_CODE_CHAR</column>
-            <column name="Total Years Experience" datatype="char">TOTAL_EXPERIENCE_YEARS_CATEGORY_CODE</column>      
-            <column name="Last Years Played" datatype="char">LAST_PLAYED_YEARS_CATEGORY_CODE</column>
-            <column name="Number of Children" datatype="tinyint">NUMBER_OF_CHILDREN_QUANTITY</column>
-            <column name="Photograph" datatype="varchar">PHOTOGRAPH_DIRECTORY_TEXT</column>
+            <column name="Most Recent Level" datatype="char(3)" class="lookup" lookupTable="T_LEVEL" lookupColumn="LEVEL_DESCRIPTION" lookupShadow="LEVEL_CODE">MOST_RECENT_LEVEL_CODE_CHAR</column>
+            <column name="Total Years Experience" datatype="char(3)" lookupTable="T_YEARS_CATEGORY_CODE" lookupColumn="YEARS_CATOGORY_DESCRIPTION" lookupShadow="YEARS_CATEGORY_CODE">TOTAL_EXPERIENCE_YEARS_CATEGORY_CODE</column>      
+            <column name="Last Years Played" datatype="char(3)" lookupTable="T_YEARS_CATEGORY_CODE" lookupColumn="YEARS_CATOGORY_DESCRIPTION" lookupShadow="YEARS_CATEGORY_CODE">LAST_PLAYED_YEARS_CATEGORY_CODE</column>
+            <column name="Number of Children" datatype="tinyint(4)">NUMBER_OF_CHILDREN_QUANTITY</column>
+            <column name="Photograph" datatype="varchar(100)">PHOTOGRAPH_DIRECTORY_TEXT</column>
             <column name="Date Enrolled" datatype="datetime">MEMBER_ENROLLMENT_DATETIME</column>
             <column name="Date Last Updated" datatype="datetime">MEMBER_LAST_UPDATE_DATETIME</column>
-            <column name="Health Insurance Indicator" datatype="char">HEALTH_INSURANCE_INDICATOR</column>
+            <column name="Health Insurance Indicator" datatype="char(1)">HEALTH_INSURANCE_INDICATOR</column>
         </table>   
         <table name="Health Insurance" value="T_HEALTH_INSURANCE">
-            <database>"womensso_wsc"</database>
-           <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
-           <!-- <column name="Order Level Code" datatype="char">ORDER_LEVEL_CODE</column> -->
-            <column name="Company Name" datatype="varchar">COMPANY_NAME</column>
-            <column name="Holder Name" datatype="varchar">HOLDER_NAME</column>
-            <column name="Policy ID" datatype="varchar">POLICY_IDENTIFIER</column>
-            <column name="Group ID" datatype="varchar">HOLDER_NAME</column>
+            <database>womensso_wsc</database>
+           <!-- <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column> -->
+           <!-- <column name="Order Level Code" datatype="char(3)">ORDER_LEVEL_CODE</column> -->
+            <column name="Company Name" datatype="varchar(40)">COMPANY_NAME</column>
+            <column name="Holder Name" datatype="varchar(80)">HOLDER_NAME</column>
+            <column name="Policy ID" datatype="varchar(20)">POLICY_IDENTIFIER</column>
+            <column name="Group ID" datatype="varchar(20)">GROUP_NAME</column>
         </table>        
         <table name="Volunteer Opportunity" value="T_VOLUNTEER_OPPORTUNITY">
-            <database>"womensso_wsc"</database>
-            <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
-            <column name="Opportunities" datatype="varchar" class="lookup" lookupTable="T_VOLUNTEER_OPPORTUNITY_CODE">VOLUNTEER_OPPORTUNITY_CODES</column>
+            <database>womensso_wsc</database>
+            <!-- <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column> -->
+            <column name="Opportunities" datatype="varchar(200)" class="lookup" lookupTable="T_VOLUNTEER_OPPORTUNITY_CODE" lookupColumn="VOLUNTEER_OPPORTUNITY_DESCRIPTION">VOLUNTEER_OPPORTUNITY_CODES</column>
         </table>
         <table name="Address" value="T_ADDRESS">
-            <database>"womensso_wsc"</database>
-            <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
-            <!-- <column name="Order Level Code" datatype="char">ORDER_LEVEL_CODE</column> -->
-            <column name="Street Address Line 1" datatype="varchar">STREET_ADDRESS_LINE1_TEXT</column>
-            <column name="Street Address Line 2" datatype="varchar">STREET_ADDRESS_LINE2_TEXT</column>
-            <column name="City" datatype="varchar">CITY_TEXT</column>
-            <column name="State" datatype="varchar" class="lookup" lookupTable="T_STATE">T_STATE_ABBREVIATION_CODE</column>
-            <column name="Zip Code" datatype="char">FIVE_DIGIT_POSTAL_CODE</column>
+            <database>womensso_wsc</database>
+            <!-- <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column> -->
+            <!-- <column name="Order Level Code" datatype="CHAR(3) class="lookup" lookupTable="T_ORDER_LEVEL" lookupColumn="ORDER_LEVEL_DESCRIPTION"">ORDER_LEVEL_CODE</column> -->
+            <column name="Street Address Line 1" datatype="varchar(40)">STREET_ADDRESS_LINE1_TEXT</column>
+            <column name="Street Address Line 2" datatype="varchar(40)">STREET_ADDRESS_LINE2_TEXT</column>
+            <column name="City" datatype="varchar(30)">CITY_TEXT</column>
+            <column name="State" datatype="varchar(2)" class="lookup" lookupTable="T_STATE" lookupColumn="STATE_NAME">T_STATE_ABBREVIATION_CODE</column>
+            <column name="Zip Code" datatype="char(5)">FIVE_DIGIT_POSTAL_CODE</column>
         </table>
         <table name="Occupation" value="T_OCCUPATION">
-            <database>"womensso_wsc"</database>
-            <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
-            <!-- <column name="Order Level Code" datatype="char">ORDER_LEVEL_CODE</column> -->
-            <column name="Occupation" datatype="varchar">OCCUPATION_TITLE_NAME</column>
-            <column name="Employer" datatype="varchar">EMPLOYER_NAME</column>
+            <database>womensso_wsc</database>
+            <!-- <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column> -->
+            <!-- <column name="Order Level Code" datatype="char(3)">ORDER_LEVEL_CODE</column> -->
+            <column name="Occupation" datatype="varchar(40)">OCCUPATION_TITLE_NAME</column>
+            <column name="Employer" datatype="varchar(40)">EMPLOYER_NAME</column>
         </table>
         <table name="Contact" value="T_CONTACT">
-            <database>"womensso_wsc"</database>
-            <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
-            <column name="Email" datatype="varchar">EMAIL</column>
-            <column name="Primary Phone Type" datatype="char" class="lookup" lookupTable="T_CONTACT_TYPE">PRIMARY_PHONE_TYPE</column>
-            <column name="Primary Phone" datatype="varchar">PRIMARY_PHONE</column>
-            <column name="Secondary Phone Type" datatype="char" class="lookup" lookupTable="T_CONTACT_TYPE">SECONDARY_PHONE_TYPE</column>
-            <column name="Secondary Phone" datatype="varchar">SECONDARY_PHONE</column>
-            <column name="Tertiary Phone Type" datatype="char" class="lookup" lookupTable="T_CONTACT_TYPE">TERTIARY_PHONE_TYPE</column>
-            <column name="Tertiary Phone" datatype="varchar">TERTIARY_PHONE</column>
+            <database>womensso_wsc</database>
+            <!-- <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column> -->
+            <column name="Email" datatype="varchar(320)">EMAIL</column>
+            <column name="Primary Phone Type" datatype="char(3)" class="lookup" lookupTable="T_CONTACT_TYPE" lookupColumn="CONTACT_TYPE_DESCRIPTION" lookupShadow="CONTACT_TYPE_CODE">PRIMARY_PHONE_TYPE</column>
+            <column name="Primary Phone" datatype="varchar(256)">PRIMARY_PHONE</column>
+            <column name="Secondary Phone Type" datatype="char(3)" class="lookup" lookupTable="T_CONTACT_TYPE" lookupColumn="CONTACT_TYPE_DESCRIPTION" lookupShadow="CONTACT_TYPE_CODE">SECONDARY_PHONE_TYPE</column>
+            <column name="Secondary Phone" datatype="varchar(266)">SECONDARY_PHONE</column>
+            <column name="Tertiary Phone Type" datatype="char(3)" class="lookup" lookupTable="T_CONTACT_TYPE" lookupColumn="CONTACT_TYPE_DESCRIPTION" lookupShadow="CONTACT_TYPE_CODE">TERTIARY_PHONE_TYPE</column>
+            <column name="Tertiary Phone" datatype="varchar(256)">TERTIARY_PHONE</column>
         </table>
         <table name="Emergency Contact" value="T_EMERGENGY_CONTACT">
-            <database>"womensso_wsc"</database>
-            <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
-            <column name="Primary Name" datatype="varchar">PRIMARY_NAME</column>
-            <column name="Primary Phone" datatype="varchar">PRIMARY_PHONE</column>
-            <column name="Secondary Name" datatype="varchar">SECONDARY_NAME</column>
-            <column name="Secondary Phone" datatype="varchar">SECONDARY_PHONE</column>
+            <database>womensso_wsc</database>
+            <!-- <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column> -->
+            <column name="Primary Name" datatype="varchar(100)">PRIMARY_NAME</column>
+            <column name="Primary Phone" datatype="varchar(256)">PRIMARY_PHONE</column>
+            <column name="Secondary Name" datatype="varchar(100)">SECONDARY_NAME</column>
+            <column name="Secondary Phone" datatype="varchar(256)">SECONDARY_PHONE</column>
         </table>
         <table name="Medical Condition" value="T_MEDICAL_CONDITION">
-            <database>"womensso_wsc"</database>
-            <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
-            <column name="Allergies" datatype="varchar">ALLERGIES</column>
-            <column name="Medical Condition Comment" datatype="varchar">MEDICAL_CONDITION_COMMENT_TEXT</column>
+            <database>womensso_wsc</database>
+            <!-- <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column> -->
+            <column name="Allergies" datatype="varchar(100)">ALLERGIES</column>
+            <column name="Medical Condition Comment" datatype="varchar(100)">MEDICAL_CONDITION_COMMENT_TEXT</column>
         </table>
         <table name="Registration Request" value="T_REGISTRATION_REQUEST">
-            <database>"womensso_wsc"</database>
-            <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
-            <column name="Registration Request ID" datatype="tinyint">REGISTRATION_REQUEST_IDENTIFIER</column>
-            <column name="WSC League" datatype="char" class="lookup" lookupTable="T_WSC_LEAGUE">WSC_LEAGUE_CODE</column>
-            <column name="Position" datatype="char" class="lookup" lookupTable="T_PLAYER_POSITION">POSITION_CODE</column>
-            <column name="WSC Team" datatype="varchar">WSC_TEAM_NAME</column>
-            <column name="Payment Processed" datatype="tinyint">REGISTRATION_PAYMENT_PROCESSED</column>
-            <column name="High School" datatype="varchar">HIGHSCHOOL_ATTENDED</column>
-            <column name="College" datatype="varchar">COLLEGE_ATTENDED</column>
+            <database>womensso_wsc</database>
+            <!-- <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column> -->
+            <column name="Registration Request ID" datatype="tinyint(4)">REGISTRATION_REQUEST_IDENTIFIER</column>
+            <column name="WSC League" datatype="char(3)" class="lookup" lookupTable="T_WSC_LEAGUE" lookupColumn="WSC_LEAGUE_DISCRIPTION">WSC_LEAGUE_CODE</column>
+            <column name="Position" datatype="char(3)" class="lookup" lookupTable="T_PLAYER_POSITION" lookupColumn="POSTION_DISCRIPTION">POSITION_CODE</column>
+            <column name="WSC Team" datatype="varchar(20)">WSC_TEAM_NAME</column>
+            <column name="Payment Processed" datatype="tinyint(1)">REGISTRATION_PAYMENT_PROCESSED</column>
+            <column name="High School" datatype="varchar(50)">HIGHSCHOOL_ATTENDED</column>
+            <column name="College" datatype="varchar(50)">COLLEGE_ATTENDED</column>
         </table>
         <table name="Consent Agreement" value="T_CONSENT_AGREEMENT" >
-            <database>"womensso_wsc"</database>
-            <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
-            <column name="Consent Agreement" datatype="varchar" class="lookup" lookupTable="T_CONSENT_AGREEMENT_OBJECT">CONSENT_OBJECT_TYPE_CODE</column>
-            <column name="Consent Approved" datatype="char">CONSENT_APPROVAL_INDICATOR</column>
+            <database>womensso_wsc</database>
+            <!-- <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column> -->
+            <column name="Consent Agreement" datatype="varchar(3)" class="lookup" lookupTable="T_CONSENT_AGREEMENT_OBJECT" lookupColumn="CONSENT_OBJECT_DESCRITION">CONSENT_OBJECT_TYPE_CODE</column>
+            <column name="Consent Approved" datatype="char(1)">CONSENT_APPROVAL_INDICATOR</column>
             <column name="Date" datatype="date">CONSENT_DATE</column>
         </table>
         
@@ -109,12 +109,12 @@ The following is the configuration for how the DataKeeper tool will associate th
         
         
         <table name="Player Details" value="T_PLAYERS">
-           <database>"womensso_sessionmanagement"</database>
-           <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column>
-           <column name="Team ID" datatype="int">TEAM_IDENTIFIER</column>
-           <column name="Player Rank Code" datatype="varchar">PLAYER_RANK_CODE</column>
-           <column name="Player Status" datatype="varchar">PLAYER_STATUS</column>
-           <column name="Jersey Number" datatype="int">JERSEY_NUMBER</column>
+           <database>womensso_sessionmanagement</database>
+           <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column>
+           <column name="Team ID" datatype="int(11)" class="lookup" lookupTable="T_TEAMS" lookupColumn="TEAM_NAME">TEAM_IDENTIFIER</column>
+           <column name="Player Rank Code" datatype="varchar(11)">PLAYER_RANK_CODE</column>
+           <column name="Player Status" datatype="varchar(25)">PLAYER_STATUS</column>
+           <column name="Jersey Number" datatype="int(11)">JERSEY_NUMBER</column>
         </table>
         
         <relatedKeyObjects>
@@ -132,10 +132,10 @@ The following is the configuration for how the DataKeeper tool will associate th
         
         
         <table name="Administrator Details" value="T_ADMINISTRATORS">
-           <database>"womensso_sessionmanagement"</database>
-           <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column>
-           <column name="Administrator ID" datatype="int">ADMINISTRATOR_IDENTIFIER</column>
-           <column name="Administrator Page ID" datatype="int">ADMINISTRATOR_PAGE_IDENTIFIER</column>
+           <database>womensso_sessionmanagement</database>
+          <!--  <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column> --> 
+           <column name="Administrator ID" datatype="int(11)">ADMINISTRATOR_IDENTIFIER</column>
+           <column name="Administrator Page ID" datatype="int(11)" class="lookup" lookupTable="T_ADMINISTRATOR_PAGES" lookupColumn="ADMINISTRATOR_PAGE_NAME">ADMINISTRATOR_PAGE_IDENTIFIER</column>
         </table>
         
         <relatedKeyObjects>
@@ -149,14 +149,14 @@ The following is the configuration for how the DataKeeper tool will associate th
         
         
         <table name="RSVP Details" value="T_RSVP">
-           <database>"womensso_sessionmanagement"</database>
-           <!-- <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column> -->
-           <column name="RSVP ID" datatype="int">RSVP_IDENTIFIER</column>
-           <column name="Game ID" datatype="int">GAME_IDENTIFIER</column>
-           <column name="Is attending?" datatype="varchar">ATTENDENCE_STATUS</column>
-           <column name="Num Emils Sent" datatype="int">EMAILS_SENT</column> 
+           <database>womensso_sessionmanagement</database>
+           <!-- <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column> -->
+           <column name="RSVP ID" datatype="int(11)">RSVP_IDENTIFIER</column>
+           <column name="Game ID" datatype="int(11)">GAME_IDENTIFIER</column>
+           <column name="Is attending?" datatype="varchar(1)">ATTENDENCE_STATUS</column>
+           <column name="Num Emils Sent" datatype="int(11)">EMAILS_SENT</column> 
            <column name="Last Day Sent" datatype="date">DAY_SENT</column>
-           <column name="Memo" datatype="int">MEMO</column>
+           <column name="Memo" datatype="int(140)">MEMO</column>
         </table>
         
         <relatedKeyObjects>
@@ -171,11 +171,11 @@ The following is the configuration for how the DataKeeper tool will associate th
         
         
         <table name="GI Details" value="T_GI">
-           <database>"womensso_sessionmanagement"</database>
-           <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column>
-           <column name="GI ID" datatype="int">GI_IDENTIFIER</column>
-           <column name="GI Type" datatype="int" class="lookup" lookupTable="T_GI_TYPES">GI_TYPE_IDENTIFIER</column>
-           <column name="Year" datatype="varchar" >Year</column> 
+           <database>womensso_sessionmanagement</database>
+           <!-- <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column> -->
+           <column name="GI ID" datatype="int(11)">GI_IDENTIFIER</column>
+           <column name="GI Type" datatype="int(11)" class="lookup" lookupTable="T_GI_TYPES" lookupColumn="GI_TYPE_TEXT">GI_TYPE_IDENTIFIER</column>
+           <column name="Year" datatype="year" >Year</column> 
         </table>
         
         <relatedKeyObjects>
@@ -188,18 +188,18 @@ The following is the configuration for how the DataKeeper tool will associate th
     <KeyObject id="5" name="Fee">
         
         
-        <table name="Fee Details" value="TI_FEES">
-           <database>"womensso_money"</database>
-           <column name="Member ID" datatype="int">MEMBER_IDENTIFIER</column>
-           <column name="Fee ID" datatype="int">MEMBER_FEE_IDENTIFIER</column>
-           <column name="Team ID" datatype="int">TEAM_IDENTIFIER</column>
-           <column name="Fee Discriptor" datatype="varchar" >FEE_DISCRIPTOR</column> 
-           <column name="Amount" datatype="float">Amount</column>
-           <column name="Is Paid?" datatype="int">IS_PAID</column>
+        <table name="Fee Details" value="T_MEMEBER_FEE">
+           <database>womensso_money</database>
+        <!--    <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column> -->
+           <column name="Fee ID" datatype="int(11)">MEMBER_FEE_IDENTIFIER</column>
+           <column name="Team ID" datatype="int(11)">TEAM_IDENTIFIER</column>
+           <column name="Fee Discriptor" datatype="varchar(50)" >FEE_DISCRIPTOR</column> 
+           <column name="Amount" datatype="float(6,2)">Amount</column>
+           <column name="Is Paid?" datatype="int(1)">IS_PAID</column>
            <column name="Date Assigned" datatype="date">DATE_ASSIGNED</column>
            <column name="Date Paid" datatype="date">DATE_PAID</column>
-           <column name="Paypal Transaction ID" datatype="varchar">TRANSACTION_IDENTIFIER</column>
-           <column name="Memo" datatype="varchar" >MEMO</column>  
+           <column name="Paypal Transaction ID" datatype="varchar(17)">TRANSACTION_IDENTIFIER</column>
+           <column name="Memo" datatype="varchar(140)" >MEMO</column>  
         </table>
         
         <relatedKeyObjects>
@@ -213,14 +213,14 @@ The following is the configuration for how the DataKeeper tool will associate th
         
         
         <table name="Team Details" value="T_TEAMS">
-           <database>"womensso_sessionmanagement"</database>
-           <column name="Team ID" datatype="int">TEAM_IDENTIFIER</column>
-           <column name="Team Name" datatype="varchar">TEAM_NAME</column>
-           <column name="Division ID" datatype="int">DIVISION_IDENTIFIER</column>
-           <column name="Team Logo" datatype="varchar">TEAM_LOGO</column>
-           <column name="Active RSVP?" datatype="int">RSVP_ACTIVE</column>
-           <column name="Substitute RSVP?" datatype="int">RSVP_SUBSTITUTE</column>
-           <column name="Inactive RSVP?" datatype="int">RSVP_INACTIVE</column>
+           <database>womensso_sessionmanagement</database>
+           <column name="Team ID" datatype="int(11)">TEAM_IDENTIFIER</column>
+           <column name="Team Name" datatype="varchar(50)">TEAM_NAME</column>
+           <column name="Division ID" datatype="int(11)" class="lookup" lookupTable="T_DIVISIONS" lookupColumn="DIVISION_NAME">DIVISION_IDENTIFIER</column>
+           <column name="Team Logo" datatype="varchar(100)">TEAM_LOGO</column>
+           <column name="Active RSVP?" datatype="int(1)">RSVP_ACTIVE</column>
+           <column name="Substitute RSVP?" datatype="int(1)">RSVP_SUBSTITUTE</column>
+           <column name="Inactive RSVP?" datatype="int(1)">RSVP_INACTIVE</column>
             
         </table>
         
@@ -236,10 +236,10 @@ The following is the configuration for how the DataKeeper tool will associate th
         
         
         <table name="Division Details" value="T_DIVISIONS">
-           <database>"womensso_sessionmanagement"</database>
-           <column name="Division ID" datatype="int">DIVISION_IDENTIFIER</column>
-           <column name="Division Name" datatype="varchar">DIVISIION_NAME</column>
-           <column name="League ID" datatype="int">LEAGUE_IDENTIFIER</column> 
+           <database>womensso_sessionmanagement</database>
+           <column name="Division ID" datatype="int(11)">DIVISION_IDENTIFIER</column>
+           <column name="Division Name" datatype="varchar(50)">DIVISIION_NAME</column>
+           <column name="League ID" datatype="int(11)" class="lookup" lookupTable="T_LEAGUES" lookupColumn="LEAGUE_NAME">LEAGUE_IDENTIFIER</column> 
         </table>
         
         <relatedKeyObjects>
@@ -254,15 +254,15 @@ The following is the configuration for how the DataKeeper tool will associate th
         
         
         <table name="League Details" value="T_LEAGUES">
-           <database>"womensso_sessionmanagement"</database>
-           <column name="League ID" datatype="int">LEAGUE_IDENTIFIER</column>
-           <column name="League Name" datatype="varchar">LEAGUE_NAME</column>
-           <column name="Session ID" datatype="int">SESSION_IDENTIFIER</column> 
+           <database>womensso_sessionmanagement</database>
+           <column name="League ID" datatype="int(11)">LEAGUE_IDENTIFIER</column>
+           <column name="League Name" datatype="varchar(50)">LEAGUE_NAME</column>
+           <column name="Session ID" datatype="int(11)" class="lookup" lookupTable="T_SESSIONS" lookupColumn="SESSION_NAME">SESSION_IDENTIFIER</column> 
            <column name="Start Date" datatype="date">START_DATE</column> 
            <column name="End Date" datatype="date">END_DATE</column> 
            <column name="Fee Start Date" datatype="date">FEE_START_DATE</column> 
            <column name="Fee End Date" datatype="date">FEE_END_DATE</column> 
-           <column name="Fee Amount" datatype="int">FEE_AMOUNT</column> 
+           <column name="Fee Amount" datatype="int(11)">FEE_AMOUNT</column> 
         </table>
         
         <relatedKeyObjects>
@@ -277,10 +277,10 @@ The following is the configuration for how the DataKeeper tool will associate th
         
         
         <table name="Session Details" value="T_SESSIONS">
-            <database>"womensso_sessionmanagement"</database>
-            <column name="Session ID" datatype="int">SESSION_IDENTIFIER</column>
-            <column name="Session Name" datatype="varchar">SESSION_NAME</column>
-            <column name="Is New?" datatype="int">NEW</column>
+            <database>womensso_sessionmanagement</database>
+            <column name="Session ID" datatype="int(11)">SESSION_IDENTIFIER</column>
+            <column name="Session Name" datatype="varchar(50)">SESSION_NAME</column>
+            <column name="Is New?" datatype="int(1)">NEW</column>
         </table>
         
         <relatedKeyObjects>
@@ -289,5 +289,40 @@ The following is the configuration for how the DataKeeper tool will associate th
         
        <!-- This is the column that all of the tables within the specified relationships identify with  -->
         <RelationshipColumn>DIVISION_IDENTIFIER</RelationshipColumn>
+    </KeyObject>
+    <KeyObject id="10" name="Game">
+        
+        
+        <table name="Games Details" value="T_GAMES">
+           <database>womensso_sessionmanagement</database>
+           <column name="Game ID" datatype="int(11)">GAME_IDENTIFIER</column>
+           <column name="Game Status ID" datatype="int(11)" class="lookup" lookupTable="T_GAME_STATUSES" lookupColumn="GAME_STATUS_NAME">GAME_STATUS_IDENTIFIER</column>
+           <column name="Home Team ID" datatype="int(11)" class="lookup" lookupTable="T_TEAMS" lookupColumn="TEAM_NAME" lookupShadow="TEAM_IDENTIFIER">HOME_TEAM_IDENTIFIER</column>
+           <column name="Away Team ID" datatype="int(11)" class="lookup" lookupTable="T_TEAMS" lookupColumn="TEAM_NAME" lookupShadow="TEAM_IDENTIFIER">AWAY_TEAM_IDENTIFIER</column>
+           <column name="Home Division ID" datatype="int(11)" class="lookup" lookupTable="T_DIVISIONS" lookupColumn="DIVISION_NAME" lookupShadow="DIVISION_IDENTIFIER">HOME_DIVISION_IDENTIFIER</column>
+           <column name="Away Division ID" datatype="int(11)" class="lookup" lookupTable="T_DIVISIONS" lookupColumn="DIVISION_NAME" lookupShadow="DIVISION_IDENTIFIER">AWAY_DIVISION_IDENTIFIER</column>
+           <column name="Home League ID" datatype="int(11)" class="lookup" lookupTable="T_LEAGUES" lookupColumn="LEAGUE_NAME" lookupShadow="LEAGUE_IDENTIFIER">HOME_LEAGUE_IDENTIFIER</column>
+           <column name="Away League ID" datatype="int(11)" class="lookup" lookupTable="T_LEAGUES" lookupColumn="LEAGUE_NAME" lookupShadow="LEAGUE_IDENTIFIER">AWAY_LEAGUE_IDENTIFIER</column>
+           <column name="Session ID" datatype="int(11)" class="lookup" lookupTable="T_SESSIONS" lookupColumn="SESSION_NAME">SESSION_IDENTIFIER</column>
+           <column name="Date" datatype="date">DATE</column>
+           <column name="Time" datatype="time">TIME</column>
+           <column name="Field Number" datatype="varchar(5)">FIELD_NUMBER</column>
+           <column name="Location ID" datatype="int(11)" class="lookup" lookupTable="T_LOCATIONS" lookupColumn="LOCATION_NAME">LOCATION_IDENTIFIER</column>
+           <column name="Referee ID" datatype="int(11)" class="lookup" lookupTable="T_REFEREES" lookupColumn="NAME">REFEREE_IDENTIFIER</column>
+           <column name="Home Team Points" datatype="int(11)">HOME_TEAM_POINTS</column>
+           <column name="Away Team Points" datatype="int(11)">AWAY_TEAM_POINTS</column>
+           <column name="Score Emails Sent" datatype="int(1)">SCORE_EMAILS_SENT</column>
+           <column name="Game Notes" datatype="varchar(100)">GAME_NOTES</column>
+            
+        </table>
+        
+        <relatedKeyObjects>
+            <KeyObject>Team</KeyObject>
+            <KeyObject>Division</KeyObject>
+            <KeyObject>Session</KeyObject>
+        </relatedKeyObjects>
+        
+       <!-- This is the column that all of the tables within the specified relationships identify with  -->
+        <RelationshipColumn>GAME_IDENTIFIER</RelationshipColumn>
     </KeyObject>
 </KeyObjects>
