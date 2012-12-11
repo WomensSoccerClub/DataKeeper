@@ -10,11 +10,7 @@ the popularity will be the number of times the query has been used
 the query will be the query itself
 
 -->
-
-
-
-
-<root>
+<root>    
     <searches>
         <search id="0" date="2012-11-10" popularity="5" query="Seach for this."></search>
         <search id="1" date="2012-11-11" popularity="4" query="Seach for that."></search>
@@ -33,5 +29,4 @@ the query will be the query itself
         <search id="14" date="2012-11-11" popularity="1" query="Seach for a team?"></search>
         <search id="15" date="2012-11-11" popularity="1" query="Seach for him."></search> 
     </searches>
-    
 </root>

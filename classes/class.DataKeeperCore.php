@@ -70,7 +70,7 @@ function LoadObjectsFromXML($tag)
     
     return $Objects;
 }
-function updateSearchHistory(){
+function updateSearchHistory($search){
 
     $history = new DOMDocument();
     $location = "../searchHistory/searchHistory.xml";
@@ -82,16 +82,31 @@ function updateSearchHistory(){
     }
     
     $theXML = file_get_contents($location);
-    echo $theXML;
     $history->loadXML($theXML);
+    $xp = new DOMXPath($history);
+     //echo $theXML;
     $list = $history->getElementsByTagName("search");
+    $increment = 1;
     
     foreach($list as $value){
-        echo $value->getAttribute("name");
+       
+            $query = $value->getAttribute("query");
+            $popularity = $value->getAttribute("popularity");
+            $update = $popularity + $increment;
+            
+        if ($query == $search){
+            
+            $value->setAttribute("popularity", $update);
+            
+        }
+        echo $value->getAttribute('id').' ';
+        echo $value->getAttribute("popularity").'<br>';
+        
     }
     
 }
-updateSearchHistory();
+$search = "Seach for captains?";
+updateSearchHistory($search);
     
 
 ?>
