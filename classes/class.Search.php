@@ -172,6 +172,27 @@ class Search
         return $this->resultList;
     }
     
+    public function resultsToHTML()
+    {
+        $htmlString = "";
+        if(!empty($this->resultList))
+        {
+            $htmlString .= "<table>";
+            foreach($this->resultList as $row)
+            {
+                $htmlString .= "<tr>";
+                foreach($row as $key => $value)
+                {
+                    $htmlString .= "<td class=\"$key\" id=\"$value\">$value</td>";
+                }
+                $htmlString .= "</tr>";
+            }
+            $htmlString .= "</table>";
+        }
+        
+        return $htmlString;
+    }
+    
     public function performQuery($query, $host, $username, $password)
     {
         if($host == "" || $host == null)        
@@ -184,6 +205,7 @@ class Search
         {
             $this->resultList[] = $record;
         }
+        mysql_close($db_connecton);
     }
     
     public function toUserString()
@@ -252,7 +274,7 @@ class Search
  * 
  * Test Segment BEGIN
  */
-$criterion[1999] = new ColumnObject("Member ID", "MEMBER_IDENTIFIER","int(11)", "womensso_wsc.T_MEMBER");
+//$criterion[1999] = new ColumnObject("Member ID", "MEMBER_IDENTIFIER","int(11)", "womensso_wsc.T_MEMBER");
 $criterion["ANA"] = new ColumnObject("Company Name","COMPANY_NAME", "varchar(40)", "womensso_wsc.T_HEALTH_INSURANCE");
 
 
@@ -261,10 +283,10 @@ $search1 = new Search("batman", $criterion , 50, "12/12/2012");
        $what->setValue($key);
 $newquery = $search1->getQuery();
 $search1->performQuery($newquery, "", "Brian", "mysqlpassword1!");
-echo "<br />" . $search1 . "<br />";
+//echo "<br />" . $search1 . "<br />";
 
-echo $search1->toUserString();
-
+echo $search1->toUserString() . "<br />";
+echo $search1->resultsToHTML();
 /*
  * 
  * Test Segment END
