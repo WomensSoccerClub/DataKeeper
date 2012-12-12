@@ -75,7 +75,7 @@ class ColumnObject
     
     public function __toString()
     {
-         return "Alias: ".$this->alias."<br />ColumnName: ".$this->columnName."<br />Datatype: ".$this->sqlDataType."<br />Owner: ".$this->owner."<br />";
+         return "Alias: ".$this->alias."<br />ColumnName: ".$this->columnName."<br />Datatype: ".$this->sqlDataType."<br />Owner: ".$this->owner."<br />Value: ".$this->value."<br />";
     }
     
     public function setValue($val)
