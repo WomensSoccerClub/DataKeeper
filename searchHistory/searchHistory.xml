@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<root>
-    <searches>
-        <search id="0" date="2012-11-10" popularity="5" query="Seach for this."></search>
-        <search id="1" date="2012-11-11" popularity="4" query="Seach for that."></search>
-        <search id="2" date="2012-11-09" popularity="3" query="Seach for who?"></search>
-        <search id="3" date="2012-11-08" popularity="2" query="Seach for him."></search>
-        <search id="4" date="2012-11-01" popularity="1" query="Seach for this."></search>
-        <search id="5" date="2012-3-02" popularity="1" query="Seach for that."></search>
-        <search id="6" date="2012-11-12" popularity="1" query="Seach for captains?"></search>
-        <search id="7" date="2012-11-12" popularity="1" query="Seach for members who haven't paid fees."></search>
-        <search id="8" date="2012-11-11" popularity="1" query="Seach for sessions."></search>
-        <search id="9" date="2010-11-11" popularity="1" query="Seach for divisions."></search>
-        <search id="10" date="2013-11-11" popularity="1" query="Seach for team Kryptonite"></search>
-        <search id="11" date="2012-7-12" popularity="1" query="Seach for jane?"></search>
-        <search id="12" date="2012-11-12" popularity="1" query="Seach for a fee"></search>
-        <search id="13" date="2012-11-11" popularity="1" query="Seach for a member."></search>
-        <search id="14" date="2012-11-11" popularity="1" query="Seach for a team?"></search>
-        <search id="15" date="2012-11-11" popularity="1" query="Seach for him."></search> 
-    </searches>
-    
-</root>
+<searches id="root">
+        <search id="0" date="2012-11-10" popularity="5" query="Seach for this."/>
+        <search id="1" date="2012-11-11" popularity="4" query="Seach for that."/>
+        <search id="2" date="2012-11-09" popularity="3" query="Seach for who?"/>
+        <search id="3" date="2012-11-08" popularity="2" query="Seach for him."/>
+        <search id="4" date="2012-11-01" popularity="1" query="Seach for this."/>
+        <search id="5" date="2012-03-02" popularity="1" query="Seach for that."/>
+        <search id="6" date="2012-11-12" popularity="1" query="Seach for captains?"/>
+        <search id="7" date="2012-11-12" popularity="1" query="Seach for members who haven't paid fees."/>
+        <search id="8" date="2012-11-11" popularity="1" query="Seach for sessions."/>
+        <search id="9" date="2010-11-11" popularity="1" query="Seach for divisions."/>
+        <search id="10" date="2013-11-11" popularity="1" query="Seach for team Kryptonite"/>
+        <search id="11" date="2012-07-12" popularity="1" query="Seach for jane?"/>
+        <search id="12" date="2012-11-12" popularity="1" query="Seach for a fee"/>
+        <search id="13" date="2012-11-11" popularity="1" query="Seach for a member."/>
+        <search id="14" date="2012-11-11" popularity="1" query="Seach for a team?"/>
+        <search id="15" date="2012-11-11" popularity="1" query="Seach for him."/> 
+</searches>

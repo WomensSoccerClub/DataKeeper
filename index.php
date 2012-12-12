@@ -1,7 +1,10 @@
 <?php
 
 $_SESSION['CURRENT_KEYOBJECT'] = ""; //keep track of the KeyObject the user is looking for
+
+
 ?>
+
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="styles.css">
@@ -60,6 +63,7 @@ $(document).ready(function() {
                 type: 'GET',
                 url: 'searchHistory/searchHistoryScript.php',
                 dataType: "html",
+                cache: false,
                 data: "" ,
                 success: function(data) { 
                   buildTable(data);

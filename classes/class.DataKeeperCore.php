@@ -3,9 +3,10 @@ require_once('class.KeyObject.php');
 require_once('class.Search.php');
 require_once('class.TableObject.php');
 require_once('class.ColumnObject.php');
+
 session_start();
 error_reporting(E_ALL);
-
+ date_default_timezone_set('America/Chicago');
 /**
  * WSCmodel - server\class.DataKeeperCore.php
  *
@@ -101,10 +102,10 @@ function LoadObjectsFromXML($tag)
     return $Objects;
 }
 function updateSearchHistory($search){
-
+    $inc = 0;
     $root = $_SERVER["DOCUMENT_ROOT"];
     $history = new DOMDocument();
-    $location = "../searchHistory/searchHistory.xml";
+    $location = $root."/searchHistory/searchHistory.xml";
     
      if(!file_exists($location))   //if the file doesn't exists
     {
@@ -114,30 +115,58 @@ function updateSearchHistory($search){
     
     $theXML = file_get_contents($location);
     $history->loadXML($theXML);
-    $xp = new DOMXPath($history);
-     //echo $theXML;
+   //$xp = new DOMXPath($history);
+   //echo $theXML;
     $list = $history->getElementsByTagName("search");
     $increment = 1;
+    $doesExist = false;
     
     foreach($list as $value){
        
             $query = $value->getAttribute("query");
             $popularity = $value->getAttribute("popularity");
             $update = $popularity + $increment;
+            $inc = $inc +1;
             
         if ($query == $search){
             
             $value->setAttribute("popularity", $update);
+            $doesExist = true;
             
         }
+       
+        
         echo $value->getAttribute('id').' ';
         echo $value->getAttribute("popularity").'<br>';
         
     }
+    if (!$doesExist){
+    //$newnode = new DOMElement('newnode');
+    $node = $history->createElement("search");
+    $size = $history->getElementsByTagName('searches');
+    $root = $history->getElementsByTagName('searches')->item(0);
+    $newnode = $root->appendChild($node);
+    //$buttwipe = $root->appendChild($newnode);
+    $newnode->setAttribute('id', $inc);
+    $newnode->setAttribute('date', date("F j, Y"));
+    $newnode->setAttribute('popularity', 1);
+    $newnode->setAttribute('query', $search);
+    
+   echo $newnode->getAttribute('id').' ';
+   echo $newnode->getAttribute("popularity").'<br>';
+    
+     }
+    
+    $history->save($location);
+    //file_put_contents($location,$history);
+    
     
 }
-$search = "Seach for captains?";
-updateSearchHistory($search);
+//$newsearch = "New Search?";
+//updateSearchHistory($newsearch);
     
 
 ?>
+
+
+

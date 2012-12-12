@@ -1,4 +1,5 @@
 <?php
+require_once('class.Breadcrumb.php');
 
 error_reporting(E_ALL);
 

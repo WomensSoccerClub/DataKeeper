@@ -2,19 +2,22 @@
 error_reporting(E_ERROR | E_PARSE);
 require_once("xml2json.php");
 
+
+
+
 // Filename from where XML contents are to be read.
 $testXmlFile = "searchHistory.xml";
 
 //Read the XML contents from the input file.
 file_exists($testXmlFile) or die('Could not find file ' . $testXmlFile);
-$xmlStringContents = file_get_contents($testXmlFile); 
-$jsonContents = "";
+//$xmlStringContents = file_get_contents($testXmlFile); 
+//$jsonContents = "";
 
 $dom = new DOMDocument();
 $dom->load('searchHistory.xml');
 $xp = new DOMXPath($dom);
 
-$searchlist = $xp->query('/root/searches/search');
+$searchlist = $xp->query('/searches/search');
 
 $pops = iterator_to_array($searchlist);
 $dates = iterator_to_array($searchlist);
@@ -26,7 +29,7 @@ function sort_by_numeric_id_attr($a, $b)
 }
 
 function sort_by_date_attr($a, $b)
-{
+{  
     //echo $b->getAttribute('date')." ".strtotime($b->getAttribute('date')).'<br/>';
     //echo $a->getAttribute('date')." ".strtotime($a->getAttribute('date')).'<br/><br/>';
     return  (int)strtotime($b->getAttribute('date')) -  (int)strtotime($a->getAttribute('date'));
