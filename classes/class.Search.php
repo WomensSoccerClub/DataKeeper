@@ -112,10 +112,20 @@ class Search
      */
     public function getQuery()
     {
-            $query = "SELECT * FROM ";
             $tableNames = null;
             $whereClauses = null;
-
+        
+            reset($this->columnCriteriaList);
+            $aString = substr(strstr(current($this->columnCriteriaList)->owner,'.',false),1);
+            $bString = getParentAliasOfTable($aString);
+            $labelColumns = KeyObject::getLabelColumns($bString);
+            $labelCols = explode(",",$labelColumns);
+            foreach($labelCols as $col)
+            {
+                $cs = explode(".",$col);
+                $tableNames[] = "$cs[0].$cs[1]";
+            }
+                       
             if(empty($this->columnCriteriaList))
                 return null;
 
@@ -125,16 +135,19 @@ class Search
                 $tableNames[] = $item->owner;   
                 $whereClauses[] = "$item->owner.$item->columnName LIKE \"%$item->value%\"";
             }
+            $query = "SELECT $labelColumns";//,.* FROM ";
             $tableNameList = array_unique($tableNames);
             unset($tableNames);
-
-            /* // add identifier clauses to whereClauses
-            for(int $i=1; $i<$tableNames->count();i++)
+            
+            foreach($tableNameList as $table)
             {
-                    $whereClauses = "$tableNames[$i-1].
-            }		
-            */
+                    if($table != null)
+                        $query .= ",$table.*";
+            }
+            
+            $query .= " FROM ";
 
+            unset($table);
             // FROM table1, table2, .. tableN
             foreach($tableNameList as $table)
             {
@@ -142,8 +155,20 @@ class Search
                         $query .= "$table, ";
             }
             $query = substr($query,0,-2) . " WHERE "; // remove last ", "
-
-
+            
+            $relationshipColumn = KeyObject::getRelationshipColumn($bString);
+            $ot = null;
+            
+            foreach($tableNameList as $t)
+            {
+                if($ot != null)
+                {
+                    $whereClauses[] = "$ot.$relationshipColumn = $t.$relationshipColumn";
+                }
+                $ot = $t;
+            }
+             
+            
             // WHERE condition1 AND condition2 AND ... conditionN
             foreach($whereClauses as $condition)
             {                   
@@ -151,11 +176,10 @@ class Search
             }
 
             $query = substr($query,0,-4) . ";";
-
+            
             return $query;
-        }
-
-    
+        
+        }    
         
     /**
      * Short description of method getResultList
@@ -275,18 +299,17 @@ class Search
  * Test Segment BEGIN
  */
 //$criterion[1999] = new ColumnObject("Member ID", "MEMBER_IDENTIFIER","int(11)", "womensso_wsc.T_MEMBER");
-$criterion["ANA"] = new ColumnObject("Company Name","COMPANY_NAME", "varchar(40)", "womensso_wsc.T_HEALTH_INSURANCE");
-
-
-$search1 = new Search("batman", $criterion , 50, "12/12/2012");
-    foreach($criterion as $key => $what)
-       $what->setValue($key);
-$newquery = $search1->getQuery();
-$search1->performQuery($newquery, "", "Brian", "mysqlpassword1!");
-//echo "<br />" . $search1 . "<br />";
-
-echo $search1->toUserString() . "<br />";
-echo $search1->resultsToHTML();
+//$criterion["ANA"] = new ColumnObject("Company Name","COMPANY_NAME", "varchar(40)", "womensso_wsc.T_HEALTH_INSURANCE");
+//
+//$search1 = new Search("batman", $criterion , 50, "12/12/2012");
+//    foreach($criterion as $key => $what)
+//       $what->setValue($key);
+//$newquery = $search1->getQuery();
+//$search1->performQuery($newquery, "", "Brian", "mysqlpassword1!");
+////echo "<br />" . $search1 . "<br />";
+//
+////echo $search1->toUserString() . "<br />";
+//echo $search1->resultsToHTML();
 /*
  * 
  * Test Segment END
