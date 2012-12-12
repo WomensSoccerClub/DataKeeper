@@ -82,8 +82,6 @@ class TableObject
         $this->tableName = $tableName;
         $this->databaseName = $databaseName;
         $this->columnList = $this::getColumns();
-        
-       
     }
     
     public function __toString()
