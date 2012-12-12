@@ -126,9 +126,21 @@ $(document).ready(function() {
      $.each(data, function(key, value) {
           var name = $(this).attr("name");
           var columnName = $(this).text();
+          var datatype = $(this).attr("datatype");
           
           var owner = database+"."+TableObject;
-       $("#ColumnSelector > tbody:last").append("<tr onclick=''><td>"+name+"</td><td><input type=\"text\" id=\""+columnName+"\" class=\"column\" owner=\""+owner+"\"><input type=\"button\" onclick=\"addColumnToSearch(this);\" name=\""+columnName+"\"></td></tr>");
+          
+          var appendString =
+          "<tr onclick=''>\n\
+           <td>"+name+"</td>\n\
+           <td>\n\
+           <input type=\"text\" id=\""+columnName+"\" class=\"column\" owner=\""+owner+"\" dataType=\""+datatype+"\" \>\n\
+           <input type=\"image\" id=\"addColumn\" src=\"http://www.womenssoccerclub.com/images/add.png\" onclick=\"addColumnToSearch(this);\" alias=\""+name+"\" name=\""+columnName+"\">\n\
+           <input type=\"image\" id=\"removeColumn\" src=\"http://www.womenssoccerclub.com/images/redx.jpg\" onclick=\"removeColumnFromSearch(this);\" alias=\""+name+"\" name=\""+columnName+"\">\n\
+           </td>\n\
+           </tr>";
+       
+       $("#ColumnSelector > tbody:last").append(appendString);
        //string += "<tr>"+name+"</tr>"
        });
   } 
@@ -164,9 +176,10 @@ $(document).ready(function() {
                 url: 'config.xml',
                 cache: false,
                 success: function(data) { 
+                   var tableName = $(data).find("table[name='"+name+"']").attr("value");
                    var database = $(data).find("table[name='"+name+"']").find("database").text();
                    var columns = $(data).find("table[name='"+name+"']").find("column");
-                   populateColumnSelector(columns,name, database);
+                   populateColumnSelector(columns,tableName, database);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                   alert(xhr.status+""+thrownError);
@@ -214,18 +227,53 @@ $(document).ready(function() {
 }
   function addColumnToSearch(element)
   {
-      var columnName = $(element).attr("name");
-      var value = $("#"+columnName).val();
+      var columnName = $(element).attr("name"); //this is the button being clicked
+      var alias = $(element).attr("alias");
+      var value = $("#"+columnName).val(); //this is the textbox (which holds alot of info)
       var owner = $("#"+columnName).attr("owner");
+      var dataType = $("#"+columnName).attr("dataType");
+      
       $.ajax({
                 type: 'GET',
                 url: '/classes/class.DataKeeperCore.php',
                 dataType: "html",
-                data: "AddToSearch=true&columnName="+columnName+"&value="+value+"&owner="+owner ,
+                data: "AddToSearch=true&dataType="+dataType+"&columnAlias="+alias+"&columnName="+columnName+"&value="+value+"&owner="+owner ,
+                cache: false,
+                success: function(data) { 
+                    alert(data);
+                    $("#query").val(data);
+                    $("#"+columnName).closest("tr").addClass("selected");
+                    $(element).hide();
+                    $("#removeColumn[name='"+columnName+"']").show();
+                    
+                  //populateKeyObjectSelector(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                  alert(xhr.status+""+thrownError);
+                }
+       });
+  }
+  function removeColumnFromSearch(element)
+  {
+      var columnName = $(element).attr("name");
+      var alias = $(element).attr("alias");
+      var value = $("#"+columnName).val();
+      var owner = $("#"+columnName).attr("owner");
+      var dataType = $("#"+columnName).attr("dataType");
+      
+      $.ajax({
+                type: 'GET',
+                url: '/classes/class.DataKeeperCore.php',
+                dataType: "html",
+                data: "RemoveFromSearch=true&dataType="+dataType+"&columnAlias="+alias+"&columnName="+columnName+"&value="+value+"&owner="+owner ,
                 cache: false,
                 success: function(data) { 
                     alert(data);
                     $("#query").val(data)
+                    $("#"+columnName).closest("tr").removeClass("selected"); //unselect the tr
+                    $(element).hide(); //hide the X
+                    $("#addColumn[name='"+columnName+"']").show(); //show the +
+                    $("#"+columnName).val("")
                   //populateKeyObjectSelector(data);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {

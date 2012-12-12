@@ -59,9 +59,33 @@ if(isset($_GET['AddToSearch'])) //adding a column to the current search
    $value = $_GET['value'];
    $owner = $_GET['owner'];
    $alias = $_GET['columnAlias'];
-   $newColumn = new ColumnObject($alias, $columnName, null, $owner);
+   $dataType = $_GET['dataType'];
+   
+   $newColumn = new ColumnObject($alias, $columnName, $dataType, $owner);
    $newColumn->setValue($value);
    $_SESSION['CURRENT_SEARCH'][] = $newColumn;
+   print_r($_SESSION['CURRENT_SEARCH']);
+   $search = new Search(null, $_SESSION['CURRENT_SEARCH'], null, null);
+   echo $search->getQuery();
+}
+
+if(isset($_GET['RemoveFromSearch'])) //adding a column to the current search
+{
+    //initialize variables
+   $columnName = $_GET['columnName'];
+   $value = $_GET['value'];
+   $owner = $_GET['owner'];
+   $alias = $_GET['columnAlias'];
+   $dataType = $_GET['dataType'];
+   
+   //create the ColumnObject
+   $newColumn = new ColumnObject($alias, $columnName, $dataType, $owner);
+   $newColumn->setValue($value);
+   
+   //remove the column
+   $pos = array_search($newColumn, $_SESSION['CURRENT_SEARCH']);
+   unset($_SESSION['CURRENT_SEARCH'][$pos]);
+   
    print_r($_SESSION['CURRENT_SEARCH']);
    $search = new Search(null, $_SESSION['CURRENT_SEARCH'], null, null);
    echo $search->getQuery();

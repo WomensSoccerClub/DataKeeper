@@ -122,4 +122,8 @@ a#searchButton:hover {
 
 #ColumnSelector input{
     height:20px;
+    vertical-align: middle;
+}
+#removeColumn{
+    display: none; 
 }
