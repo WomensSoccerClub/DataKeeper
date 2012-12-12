@@ -75,6 +75,7 @@ class Search
  function __construct($searchName, $columnCriteriaList, $freqCounter, $timeStamp) {
        $this->searchName = $searchName;
        $this->columnCriteriaList = $columnCriteriaList;
+       ksort($this->columnCriteriaList);
        $this->freqCounter = $freqCounter;
        $this->timeStamp = $timeStamp;
    }
@@ -84,9 +85,10 @@ class Search
      * @access public
      * @author firstname and lastname of author, <author@example.org>
      */
-    public function addColumn($column)
+    public function addColumn(ColumnObject $column)
     {
-        $this->columnCriteriaList[] = $column;
+        $this->columnCriteriaList[$column->alias] = $column;
+        ksort($this->columnCriteriaList);
     }
 
     /**
@@ -98,6 +100,8 @@ class Search
     public function removeColumn($columnToRemove)
     {
         unset($this->columnCriteriaList[$columnToRemove]);
+        if(!empty(ksort($this->columnCriteriaList)))
+            ksort($this->columnCriteriaList);
     }
 
     /**
