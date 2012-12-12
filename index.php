@@ -60,8 +60,10 @@ $(document).ready(function() {
                 type: 'GET',
                 url: 'searchHistory/searchHistoryScript.php',
                 dataType: "html",
-                data: "" ,
+                cache: false,
+                data: "getSearches" ,
                 success: function(data) { 
+                  alert(data);
                   buildTable(data);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -117,10 +119,10 @@ $(document).ready(function() {
        //string += "<tr>"+name+"</tr>"
        });
   }
-  function populateColumnSelector(data,TableObject, database)
+  function populateColumnSelector(data,TableObject, alias, database)
   {
       $("#ColumnSelector tbody").html("<th class='title' colspan=\"2\"></th>"); //erase all but header
-      $("#ColumnSelector th").html(TableObject); //set the header to the current selected KeyObject
+      $("#ColumnSelector th").html(alias); //set the header to the current selected KeyObject
 
     
      $.each(data, function(key, value) {
@@ -158,7 +160,7 @@ $(document).ready(function() {
                 data: "" ,
                 success: function(data) { 
                   populateTableSelector(data,KeyObjectName);
-                  populateColumnSelector("null","Columns") //set the column to be empty
+                  populateColumnSelector(null, null, "Columns", null) //set the column to be empty
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                   alert(xhr.status+""+thrownError);
@@ -176,10 +178,11 @@ $(document).ready(function() {
                 url: 'config.xml',
                 cache: false,
                 success: function(data) { 
+                   var alias = $(data).find("table[name='"+name+"']").attr("name");
                    var tableName = $(data).find("table[name='"+name+"']").attr("value");
                    var database = $(data).find("table[name='"+name+"']").find("database").text();
                    var columns = $(data).find("table[name='"+name+"']").find("column");
-                   populateColumnSelector(columns,tableName, database);
+                   populateColumnSelector(columns,tableName,alias, database);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                   alert(xhr.status+""+thrownError);
@@ -197,19 +200,21 @@ $(document).ready(function() {
       var searches = $(searchHistory).find("search");
 
       var html = '<table id="hor-minimalist-a">';
-      for (var i = 0; i < 15; i++) { // For each row  
-          var search = $(searches).get(i-2)
+      var p=0;
+      for (var i = 0; i < 16; i++) { // For each row  
+          var search = $(searches).get(i);
           if(i==0) //if first row
           {
               html += "<tr><th colspan='3'>Most Popular Searches</th></tr>";
-          }else if(i==6){ //if 6th row
+          }else if(i==7){ //if 7th row
               html += "<tr><th colspan='3'>Most Recently Searched</th></tr>";
-          }else if(i==1 || i==7){ //if title slides
+          }else if(i==1 || i==8){ //if title slides
               html += "<td class='title'>Popularity</td><td class='title'>Date</td><td class='title'>Search</td>";
           
           }else{
+          var search = $(searches).get(p);
           html += "<tr id='choice"+i+"' onclick=\"javascript:placeInSearch(this)\">";
-          for(var j=0; j<3; j++) //for each column
+          for(var j=0; j<4; j++) //for each column
               {
                   if(j==0) //popularity
                       html += '<td name="popularity">'+$(search).attr("popularity")+'</td>';
@@ -218,6 +223,7 @@ $(document).ready(function() {
                   if(j==2)
                        html += '<td name="query">'+$(search).attr("query")+'</td>';
               }
+          p++
           html += '</tr>'; // Add row separator
          }
       } //for

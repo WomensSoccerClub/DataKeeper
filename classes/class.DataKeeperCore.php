@@ -64,9 +64,9 @@ if(isset($_GET['AddToSearch'])) //adding a column to the current search
    $newColumn = new ColumnObject($alias, $columnName, $dataType, $owner);
    $newColumn->setValue($value);
    $_SESSION['CURRENT_SEARCH'][] = $newColumn;
-   print_r($_SESSION['CURRENT_SEARCH']);
+   //print_r($_SESSION['CURRENT_SEARCH']);
    $search = new Search(null, $_SESSION['CURRENT_SEARCH'], null, null);
-   echo $search->getQuery();
+   echo $search->toUserString();
 }
 
 if(isset($_GET['RemoveFromSearch'])) //adding a column to the current search
@@ -86,9 +86,9 @@ if(isset($_GET['RemoveFromSearch'])) //adding a column to the current search
    $pos = array_search($newColumn, $_SESSION['CURRENT_SEARCH']);
    unset($_SESSION['CURRENT_SEARCH'][$pos]);
    
-   print_r($_SESSION['CURRENT_SEARCH']);
+   //print_r($_SESSION['CURRENT_SEARCH']);
    $search = new Search(null, $_SESSION['CURRENT_SEARCH'], null, null);
-   echo $search->getQuery();
+   echo $search->toUserString();
 }
 
 if(isset($_GET['ClearSearch'])) //if ClearSearch exists, do just that.
@@ -184,6 +184,42 @@ function search($array, $key, $value)
     }
 
     return $results;
+}
+function updateSearchHistory($search){ //everytime you perform a search, call this
+
+    $root = $_SERVER["DOCUMENT_ROOT"];
+    $history = new DOMDocument();
+    $location = "../searchHistory/searchHistory.xml";
+    
+     if(!file_exists($location))   //if the file doesn't exists
+    {
+        echo "The config file \"$location\" was not found. This is horribly wrong.";
+        exit;
+    }
+    
+    $theXML = file_get_contents($location);
+    $history->loadXML($theXML);
+    $xp = new DOMXPath($history);
+     //echo $theXML;
+    $list = $history->getElementsByTagName("search");
+    $increment = 1;
+    
+    foreach($list as $value){
+       
+            $query = $value->getAttribute("query");
+            $popularity = $value->getAttribute("popularity");
+            $update = $popularity + $increment;
+            
+        if ($query == $search){
+            
+            $value->setAttribute("popularity", $update);
+            
+        }
+        echo $value->getAttribute('id').' ';
+        echo $value->getAttribute("popularity").'<br>';
+        
+    }
+    
 }
 
 ?>
