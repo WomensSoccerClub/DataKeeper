@@ -102,6 +102,7 @@ function LoadObjectsFromXML($tag)
 }
 function updateSearchHistory($search){
 
+    $root = $_SERVER["DOCUMENT_ROOT"];
     $history = new DOMDocument();
     $location = "../searchHistory/searchHistory.xml";
     
