@@ -24,13 +24,26 @@ if (0 > version_compare(PHP_VERSION, '5')) {
     die('This file was generated for PHP 5');
 }
 
-
-$KeyObjects = array();
-$KeyObjectXML = LoadObjectsFromXML("KeyObject");
-foreach($KeyObjectXML as $KeyObjectElement)
+function createKeyObjects()
 {
-    $KeyObjects[]=$KeyObjectElement->getAttribute("name");
+    $KeyObjects = array(); //an array of KeyObject "names"
+    $KeyObjectXML = LoadObjectsFromXML("KeyObject");
+    foreach($KeyObjectXML as $KeyObjectElement)
+    {
+        $name = $KeyObjectElement->getAttribute("name");
+        if(!$name=="")
+            $KeyObjects[]= $name;
+    }
+    $KeyObjectArray = array();
+    foreach($KeyObjects as $KeyObject)
+    {
+        $KeyObjectArray[$KeyObject] = new KeyObject($KeyObject);
+    }
+    return $KeyObjectArray;
+
 }
+//$KeyObjects = createKeyObjects();
+//print_r($KeyObjects);
 
 
 if(isset($_GET['KeyObjectSelect'])) //keeping track of the current KeyObject the user is searching for
@@ -45,8 +58,8 @@ if(isset($_GET['AddToSearch'])) //adding a column to the current search
    $columnName = $_GET['columnName'];
    $value = $_GET['value'];
    $owner = $_GET['owner'];
-   
-   $newColumn = new ColumnObject(null, $columnName, null, $owner);
+   $alias = $_GET['columnAlias'];
+   $newColumn = new ColumnObject($alias, $columnName, null, $owner);
    $newColumn->setValue($value);
    $_SESSION['CURRENT_SEARCH'][] = $newColumn;
    print_r($_SESSION['CURRENT_SEARCH']);
@@ -57,6 +70,11 @@ if(isset($_GET['AddToSearch'])) //adding a column to the current search
 if(isset($_GET['ClearSearch'])) //if ClearSearch exists, do just that.
 {
     $_SESSION['CURRENT_SEARCH']=null;
+}
+
+if(isset($_GET['GetParentAliasFromTable']))
+{
+    echo getParentAliasOfTable($_GET['GetParentAliasFromTable']);
 }
 
 
@@ -101,5 +119,47 @@ function LoadObjectsFromXML($tag)
     return $Objects;
 }
 
+function getParentAliasOfTable($tableName)
+{
+    $root = $_SERVER["DOCUMENT_ROOT"];
+    $xml = new DOMDocument();
+    $location = $root."/config.xml";
+    
+    if(!file_exists($location))   //if the file doesn't exists
+    {
+        echo "The config file \"$location\" was not found. This is horribly wrong.";
+        exit;
+    }
+    $theXML = file_get_contents($location);
+    $xml->loadXML($theXML);
+    $tables = $xml->getElementsByTagName("table");
+    
+    foreach($tables as $tableElement)
+    {
+        //echo $tableElement->getAttribute("value");
+        if($tableElement->getAttribute("value")==$tableName)
+        {
+            $parent = $tableElement->parentNode->getAttribute("name");
+            break;
+        }
+    }
+    return $parent;
+}
+
+function search($array, $key, $value)
+{
+    $results = array();
+
+    if (is_array($array))
+    {
+        if (isset($array[$key]) && $array[$key] == $value)
+            $results[] = $array;
+
+        foreach ($array as $subarray)
+            $results = array_merge($results, search($subarray, $key, $value));
+    }
+
+    return $results;
+}
 
 ?>
