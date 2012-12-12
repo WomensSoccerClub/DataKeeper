@@ -26,6 +26,7 @@ if (0 > version_compare(PHP_VERSION, '5')) {
  * @author firstname and lastname of author, <author@example.org>
  */
 require_once('class.ColumnObject.php');
+require_once('class.DataKeeperCore.php');
 
 /**
  * Short description of class server_Search
@@ -67,6 +68,8 @@ class Search
      * @var String
      */
     public $timeStamp = null;
+    
+    public $resultList = null;
 
     // --- OPERATIONS ---
  function __construct($searchName, $columnCriteriaList, $freqCounter, $timeStamp) {
@@ -105,47 +108,47 @@ class Search
      */
     public function getQuery()
     {
-		$query = "SELECT * FROM ";
-		$tableNames = null;
-		$whereClauses = null;
-		
-                if(empty($this->columnCriteriaList))
-                    return null;
-                               
-		// create unique list (a set) of tables 
-		foreach($this->columnCriteriaList as $item)
-		{
-                    $tableNames[] = $item->owner;   
-                    $whereClauses[] = "$item->owner.$item->columnName LIKE \"%$item->value%\"";
-		}
-                $tableNameList = array_unique($tableNames);
-                unset($tableNames);
-                
-                /* // add identifier clauses to whereClauses
-		for(int $i=1; $i<$tableNames->count();i++)
-		{
-			$whereClauses = "$tableNames[$i-1].
-		}		
-		*/
-		
-		// FROM table1, table2, .. tableN
-		foreach($tableNameList as $table)
-		{
-                        if($table != null)
-                            $query .= "$table, ";
-		}
-		$query = substr($query,0,-2) . " WHERE "; // remove last ", "
-		
-		
-		// WHERE condition1 AND condition2 AND ... conditionN
-		foreach($whereClauses as $condition)
-		{                   
-			$query .= "$condition AND ";
-		}
-		
-		$query = substr($query,0,-4) . ";";
-		
-                return $query;
+            $query = "SELECT * FROM ";
+            $tableNames = null;
+            $whereClauses = null;
+
+            if(empty($this->columnCriteriaList))
+                return null;
+
+            // create unique list (a set) of tables 
+            foreach($this->columnCriteriaList as $item)
+            {
+                $tableNames[] = $item->owner;   
+                $whereClauses[] = "$item->owner.$item->columnName LIKE \"%$item->value%\"";
+            }
+            $tableNameList = array_unique($tableNames);
+            unset($tableNames);
+
+            /* // add identifier clauses to whereClauses
+            for(int $i=1; $i<$tableNames->count();i++)
+            {
+                    $whereClauses = "$tableNames[$i-1].
+            }		
+            */
+
+            // FROM table1, table2, .. tableN
+            foreach($tableNameList as $table)
+            {
+                    if($table != null)
+                        $query .= "$table, ";
+            }
+            $query = substr($query,0,-2) . " WHERE "; // remove last ", "
+
+
+            // WHERE condition1 AND condition2 AND ... conditionN
+            foreach($whereClauses as $condition)
+            {                   
+                    $query .= "$condition AND ";
+            }
+
+            $query = substr($query,0,-4) . ";";
+
+            return $query;
         }
 
     
@@ -161,6 +164,22 @@ class Search
     {
         // section -64--88--106-1--6c338a91:13aaa68e2e6:-8000:0000000000000A36 begin
         // section -64--88--106-1--6c338a91:13aaa68e2e6:-8000:0000000000000A36 end
+        
+        return $this->resultList;
+    }
+    
+    public function performQuery($query, $host, $username, $password)
+    {
+        if($host == "" || $host == null)        
+            $host = ini_get("mysql.default_host");
+        
+        $db_connecton = mysql_connect($host, $username, $password) or die("Unable to connect to MySQL");
+        $result = mysql_query($query);
+        $this->resultList = null;
+        while($record = mysql_fetch_assoc($result))
+        {
+            $this->resultList[] = $record;
+        }
     }
     
     public function toUserString()
@@ -169,14 +188,19 @@ class Search
         
         if(!empty($this->columnCriteriaList))
         {
-            $prettyString = "";
+           // $prettyString = "" . getParentAliasOfTable($tableName);
+            reset($this->columnCriteriaList);
+            $aString = substr(strstr(current($this->columnCriteriaList)->owner,'.',false),1);
+            //$prettyString = getParentAliasOfTable($aString);
+            $prettyString = getParentAliasOfTable($aString) . "[ ";           
+            
             foreach($this->columnCriteriaList as $column)
             {
                 $prettyString .= "$column->alias =\"$column->value\" ";
             }
         }
         
-        return $prettyString;
+        return $prettyString . "]";
     }
     
     public function __toString() {
@@ -189,12 +213,32 @@ class Search
         }
         else
         {
-            $returnString .= "<br />{";
+            $returnString .= "<br />{";            
             foreach($this->columnCriteriaList as $column)
             {
-                $returnString .= "<br />" . $column;
+                    $returnString .= "<br />" . $column;
             }
             $returnString .= "}";
+        }
+        
+        $returnString .= "<br />Results: ";
+        if( empty($this->resultList))
+        {
+            $returnString .= "NULL <br />";
+        }
+        else
+        {
+            $returnString .= "<br />{";
+            foreach($this->resultList as $item)
+            {
+                
+                $returnString .= "<br />";
+                foreach($item as $piece)
+                {
+                    $returnString .= $piece . " ";
+                }
+            }
+            $returnString .= "<br />}";
         }
         return $returnString;
     }
@@ -204,28 +248,17 @@ class Search
  * 
  * Test Segment BEGIN
  */
-//$criterion[] = new ColumnObject("Member ID", "MEMBER_IDENTIFIER","int(11)", "womensso_wsc.T_MEMBER");
-$criterion["ealth"] = new ColumnObject("Company Name","COMPANY_NAME", "varchar(40)", "womensso_wsc.T_HEALTH_INSURANCE");
-//$criterion[] = new ColumnObject("water polo", "liquid_polo", "varchar(10)", "db5h.tableized");
+$criterion[1999] = new ColumnObject("Member ID", "MEMBER_IDENTIFIER","int(11)", "womensso_wsc.T_MEMBER");
+$criterion["ANA"] = new ColumnObject("Company Name","COMPANY_NAME", "varchar(40)", "womensso_wsc.T_HEALTH_INSURANCE");
 
-foreach($criterion as $key => $what)
-{
-    $what->setValue($key);
-}
+
 $search1 = new Search("batman", $criterion , 50, "12/12/2012");
-echo $search1 . "<br />";
-//phpinfo();
-$dbh = mysql_connect(ini_get("mysql.default_host"), "Brian", "mysqlpassword1!") or die("Unable to connect to MySQL");
-//echo $dbh;
+    foreach($criterion as $key => $what)
+       $what->setValue($key);
 $newquery = $search1->getQuery();
-echo $newquery . "<br />";
-$result = mysql_query($newquery);
-while($record = mysql_fetch_assoc($result))
-{
-    print_r($record);
-    echo "<br />";
-    $records[] = $record;
-}
+$search1->performQuery($newquery, "", "Brian", "mysqlpassword1!");
+echo "<br />" . $search1 . "<br />";
+
 echo $search1->toUserString();
 
 /*
