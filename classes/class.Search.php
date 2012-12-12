@@ -100,7 +100,7 @@ class Search
     public function removeColumn($columnToRemove)
     {
         unset($this->columnCriteriaList[$columnToRemove]);
-        if(!empty(ksort($this->columnCriteriaList)))
+        if(!empty($this->columnCriteriaList))
             ksort($this->columnCriteriaList);
     }
 
