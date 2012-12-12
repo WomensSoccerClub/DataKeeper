@@ -3,7 +3,7 @@
 The following is the configuration for how the DataKeeper tool will associate the data within the databases
 -->
 <KeyObjects>
-    <KeyObject id="0" name="Member">
+    <KeyObject id="0" name="Member" labelColumns="womensso_wsc.T_MEMBER.LAST_NAME,womensso_wsc.T_MEMBER.FIRST_NAME,womensso_wsc.T_MEMBER.MIDDLE_INITIAL_TEXT">
         
         <table name="Member" value="T_MEMBER">
             <database>womensso_wsc</database>
@@ -105,7 +105,7 @@ The following is the configuration for how the DataKeeper tool will associate th
        <!-- This is the column that all of the tables within the specified relationships identify with  -->
         <RelationshipColumn>MEMBER_IDENTIFIER</RelationshipColumn>
     </KeyObject>
-    <KeyObject id="1" name="Player">
+    <KeyObject id="1" name="Player" labelColumns="womensso_wsc.T_MEMBER.LAST_NAME,womensso_wsc.T_MEMBER.FIRST_NAME,womensso_wsc.T_MEMBER.MIDDLE_INITIAL_TEXT">
         
         
         <table name="Player Details" value="T_PLAYERS">
@@ -128,10 +128,10 @@ The following is the configuration for how the DataKeeper tool will associate th
        <!-- This is the column that all of the tables within the specified relationships identify with  -->
         <RelationshipColumn>MEMBER_IDENTIFIER</RelationshipColumn>
     </KeyObject>
-    <KeyObject id="2" name="Administrator">
+    <KeyObject id="2" name="Administrator" labelColumns="womensso_wsc.T_MEMBER.LAST_NAME,womensso_wsc.T_MEMBER.FIRST_NAME,womensso_wsc.T_MEMBER.MIDDLE_INITIAL_TEXT">
         
         
-        <table name="Administrator Details" value="T_ADMINISTRATORS">
+        <table name="Administrator Details" value="T_ADMINISTRATORS" labelColumns="womensso_wsc.T_MEMBER.LAST_NAME,womensso_wsc.T_MEMBER.FIRST_NAME,womensso_wsc.T_MEMBER.MIDDLE_INITIAL_TEXT">
            <database>womensso_sessionmanagement</database>
           <!--  <column name="Member ID" datatype="int(11)">MEMBER_IDENTIFIER</column> --> 
            <column name="Administrator ID" datatype="int(11)">ADMINISTRATOR_IDENTIFIER</column>
@@ -145,7 +145,7 @@ The following is the configuration for how the DataKeeper tool will associate th
        <!-- This is the column that all of the tables within the specified relationships identify with  -->
         <RelationshipColumn>MEMBER_IDENTIFIER</RelationshipColumn>
     </KeyObject>
-    <KeyObject id="3" name="RSVP">
+    <KeyObject id="3" name="RSVP" labelColumns="womensso_sessionmanagement.T_RSVP.RSVP_IDENTIFIER">
         
         
         <table name="RSVP Details" value="T_RSVP">
@@ -154,7 +154,7 @@ The following is the configuration for how the DataKeeper tool will associate th
            <column name="RSVP ID" datatype="int(11)">RSVP_IDENTIFIER</column>
            <column name="Game ID" datatype="int(11)">GAME_IDENTIFIER</column>
            <column name="Is attending?" datatype="varchar(1)">ATTENDENCE_STATUS</column>
-           <column name="Num Emils Sent" datatype="int(11)">EMAILS_SENT</column> 
+           <column name="Num Emails Sent" datatype="int(11)">EMAILS_SENT</column> 
            <column name="Last Day Sent" datatype="date">DAY_SENT</column>
            <column name="Memo" datatype="int(140)">MEMO</column>
         </table>
@@ -167,7 +167,7 @@ The following is the configuration for how the DataKeeper tool will associate th
        <!-- This is the column that all of the tables within the specified relationships identify with  -->
         <RelationshipColumn>MEMBER_IDENTIFIER</RelationshipColumn>
     </KeyObject>
-    <KeyObject id="4" name="GI">
+    <KeyObject id="4" name="GI" labelColumns="womensso_sessionmanagement.T_GI.GI_TYPE_IDENTIFIER">
         
         
         <table name="GI Details" value="T_GI">
@@ -185,7 +185,7 @@ The following is the configuration for how the DataKeeper tool will associate th
        <!-- This is the column that all of the tables within the specified relationships identify with  -->
         <RelationshipColumn>MEMBER_IDENTIFIER</RelationshipColumn>
     </KeyObject>
-    <KeyObject id="5" name="Fee">
+    <KeyObject id="5" name="Fee" labelColumns="womensso_money.T_MEMBER_FEE.FEE_DISCRIPTOR">
         
         
         <table name="Fee Details" value="T_MEMEBER_FEE">
@@ -209,7 +209,7 @@ The following is the configuration for how the DataKeeper tool will associate th
        <!-- This is the column that all of the tables within the specified relationships identify with  -->
         <RelationshipColumn>MEMBER_IDENTIFIER</RelationshipColumn>
     </KeyObject>
-    <KeyObject id="6" name="Team">
+    <KeyObject id="6" name="Team" labelColumns="womensso_sessionmanagement.T_TEAMS.TEAM_NAME">
         
         
         <table name="Team Details" value="T_TEAMS">
@@ -232,13 +232,13 @@ The following is the configuration for how the DataKeeper tool will associate th
        <!-- This is the column that all of the tables within the specified relationships identify with  -->
         <RelationshipColumn>TEAM_IDENTIFIER</RelationshipColumn>
     </KeyObject>
-    <KeyObject id="7" name="Divison">
+    <KeyObject id="7" name="Divison" labelColumns="womensso_sessionmanagement.T_DIVISIONS.DIVISION_NAME">
         
         
         <table name="Division Details" value="T_DIVISIONS">
            <database>womensso_sessionmanagement</database>
            <column name="Division ID" datatype="int(11)">DIVISION_IDENTIFIER</column>
-           <column name="Division Name" datatype="varchar(50)">DIVISIION_NAME</column>
+           <column name="Division Name" datatype="varchar(50)">DIVISION_NAME</column>
            <column name="League ID" datatype="int(11)" class="lookup" lookupTable="T_LEAGUES" lookupColumn="LEAGUE_NAME">LEAGUE_IDENTIFIER</column> 
         </table>
         
@@ -250,7 +250,7 @@ The following is the configuration for how the DataKeeper tool will associate th
        <!-- This is the column that all of the tables within the specified relationships identify with  -->
         <RelationshipColumn>DIVISION_IDENTIFIER</RelationshipColumn>
     </KeyObject>
-    <KeyObject id="8" name="League">
+    <KeyObject id="8" name="League" labelColumns="womensso_sessionmanagement.T_LEAGUES.LEAGUE_NAME">
         
         
         <table name="League Details" value="T_LEAGUES">
@@ -273,7 +273,7 @@ The following is the configuration for how the DataKeeper tool will associate th
        <!-- This is the column that all of the tables within the specified relationships identify with  -->
         <RelationshipColumn>DIVISION_IDENTIFIER</RelationshipColumn>
     </KeyObject>
-    <KeyObject id="9" name="Session">
+    <KeyObject id="9" name="Session" labelColumns="womensso_sessionmanagement.T_SESSIONS.SESSION_NAME">
         
         
         <table name="Session Details" value="T_SESSIONS">
@@ -290,7 +290,7 @@ The following is the configuration for how the DataKeeper tool will associate th
        <!-- This is the column that all of the tables within the specified relationships identify with  -->
         <RelationshipColumn>DIVISION_IDENTIFIER</RelationshipColumn>
     </KeyObject>
-    <KeyObject id="10" name="Game">
+    <KeyObject id="10" name="Game" labelColumns="womensso_sessionmanagement.T_GAMES.HOME_TEAM_IDENTIFIER,womensso_sessionmanagement.T_GAMES.AWAY_TEAM_IDENTIFIER,womensso_sessionmanagement.T_GAMES.DATE">
         
         
         <table name="Games Details" value="T_GAMES">

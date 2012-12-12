@@ -28,11 +28,13 @@ class KeyObject
     public $alias = null;
     public $tableList = array();
     public $relatedKeyObjects = array();
+    public $labelColumns = null;
 
 function __construct($name) {
        $this->alias = $name;
        $this->tableList = $this::getTables();
        $this->relatedKeyObjects = $this::getRelatedKeyObjects();
+       $this->labelColumns = $this::getLabelColumns();
        
    }
    
@@ -101,6 +103,29 @@ function getRelatedKeyObjects()
     return $relatedArray;
 }
 
+function getLabelColumns($name="")
+{
+    if($name=="")
+        $name=$this->alias;
+    
+    $xml = new DOMDocument();
+    $location = "../config.xml";
+    
+    if(!file_exists($location))   //if the file doesn't exists
+    {
+        echo "The config file \"$location\" was not found. This is horribly wrong.";
+        exit;
+    }
+    $theXML = file_get_contents($location);
+    $xml->loadXML($theXML);
+    $KeyObjects = $xml->getElementsByTagName("KeyObject");
+    foreach($KeyObjects as $domElement)
+    {
+        if($domElement->getAttribute("name") == $name) //if the element is the object we're looking for
+            break;
+    }
+    return $domElement->getAttribute("labelColumns");
+}
 } /* end of class databases_KeyObject */
 
 
